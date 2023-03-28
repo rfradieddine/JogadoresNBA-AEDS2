@@ -1,26 +1,37 @@
+import java.util.Scanner;
+
 public class Main {
-    public static void main(String[] args) {
+    public static class Jogador {
+        private int id, anoNascimento, altura, peso;
+        private String nome, estadoNascimento, universidade, cidadeNascimento;
 
-    }
+        //Leitura de dados do jogador
+        void entradaDados(){
+            Scanner sc = new Scanner(System.in);
 
-    class  Jogador implements  Cloneable{
-        private int id;
-        private String nome;
-        private int altura;
-        private int peso;
-        private String universidade;
-        private int anoNascimento;
-        private String cidadeNascimento;
-        private String estadoNascimento;
-
-        public void imprimirDados(){
+            this.id = sc.nextInt();
+            this.anoNascimento = sc.nextInt();
+            this.altura = sc.nextInt();
+            this.peso = sc.nextInt();
+            this.nome = sc.nextLine();
+            this.estadoNascimento = sc.nextLine();
+            this.universidade = sc.nextLine();
+            this.cidadeNascimento = sc.nextLine();
 
         }
 
+        //Imprimir dados do jogador
+        public String imprimir() {
+            return toString();
+        }
+
+        //Construtor 1
         public Jogador() {
         }
 
-        public Jogador(int id, String nome, int altura, int peso, String universidade, int anoNascimento, String cidadeNascimento, String estadoNascimento) {
+        //Construtor 2
+        public Jogador (int id, String nome, int altura, int peso, String universidade, int anoNascimento,
+                        String cidadeNascimento, String estadoNascimento) {
             this.id = id;
             this.nome = nome;
             this.altura = altura;
@@ -31,6 +42,7 @@ public class Main {
             this.estadoNascimento = estadoNascimento;
         }
 
+        //Geters e Seters
         public int getId() {
             return id;
         }
@@ -95,13 +107,33 @@ public class Main {
             this.estadoNascimento = estadoNascimento;
         }
 
+
+        //Metodo toString
+        @Override
+        public String toString() {
+            return "[" +
+                    id +
+                    "##" + nome +
+                    "##" + altura +
+                    "##" + peso +
+                    "##'" + anoNascimento +
+                    "##" + universidade +
+                    "##'" + cidadeNascimento +
+                    "##'" + estadoNascimento +
+                    ']';
+        }
+
+        //Metodo clone
         public Object clone() throws CloneNotSupportedException{
             return super.clone();
         }
+    }
 
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        Jogador[] jogador = new Jogador[5000];
 
 
     }
-
-
 }
