@@ -156,7 +156,7 @@ public class Main {
             for(int j = 0; j < numJogadores; j++) {
                 Jogador jogador = jogadores[j];
                 if(jogador.getId() == idBusca) {
-                    System.out.println(jogador.toString());
+                    System.out.println(jogador.imprimir());
                     break;
                 }
             }
