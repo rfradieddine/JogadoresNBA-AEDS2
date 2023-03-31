@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 class Jogador {
@@ -5,7 +7,7 @@ class Jogador {
     private String nome, estadoNascimento, universidade, cidadeNascimento;
 
     //Leitura de dados do jogador
-    void entradaDados(){
+    public void ler(){
         Scanner sc = new Scanner(System.in);
 
         this.id = sc.nextInt();
@@ -129,13 +131,21 @@ class Jogador {
 
 public class Main {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+        File file = new File("E:\\Desenvolvimento\\Estudo\\Faculdade\\AEDS2 - Engenharia de Software\\JogadoresNBA-AEDS2\\pub-IN.in");
+        Scanner sc = null;
+        try {
+            sc = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            System.out.println("Erro ao abrir arquivo.");
+        }
 
         // Lê dados dos jogadores
         Jogador[] jogadores = new Jogador[5000];
         int numJogadores = 0;
         String entrada;
-        while(!(entrada = sc.nextLine()).equals("FIM")) {
+        while(true) {
+            assert sc != null;
+            if ((entrada = sc.nextLine()).equals("FIM")) break;
             String[] dados = entrada.split(",");
             Jogador jogador = new Jogador();
             jogador.setId(Integer.parseInt(dados[0]));
@@ -149,18 +159,9 @@ public class Main {
             jogadores[numJogadores++] = jogador;
         }
 
-        // Realiza as buscas pelos jogadores
-        int numBuscas = Integer.parseInt(sc.nextLine());
-        for(int i = 0; i < numBuscas; i++) {
-            int idBusca = Integer.parseInt(sc.nextLine());
-            for(int j = 0; j < numJogadores; j++) {
-                Jogador jogador = jogadores[j];
-                if(jogador.getId() == idBusca) {
-                    System.out.println(jogador.imprimir());
-                    break;
-                }
-            }
+        // Imprime dados dos jogadores
+        for(int i = 0; i < numJogadores; i++) {
+            System.out.println(jogadores[i].imprimir());
         }
-        sc.close();
     }
 }
