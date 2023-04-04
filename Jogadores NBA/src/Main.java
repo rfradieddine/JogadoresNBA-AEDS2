@@ -131,7 +131,7 @@ class Jogador {
 
 public class Main {
     public static void main(String[] args) {
-        File file = new File("E:\\Desenvolvimento\\Estudo\\Faculdade\\AEDS2 - Engenharia de Software\\JogadoresNBA-AEDS2\\pub-IN.in");
+        File file = new File("E:\\Desenvolvimento\\Estudo\\Faculdade\\AEDS2 - Engenharia de Software\\JogadoresNBA-AEDS2\\pub.in");
         Scanner sc = null;
         try {
             sc = new Scanner(file);
