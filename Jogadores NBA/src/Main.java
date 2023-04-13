@@ -89,10 +89,6 @@ class Jogador {
         return this.estadoNascimento;
     }
 
-    public void ler() {
-
-    }
-
     //Metodo para imprimir os dados do jogador
     public String imprimir() {
         return toString();
@@ -130,7 +126,6 @@ class Jogador {
     }
 
 }
-
 
 public class Main {
     public static Jogador[] jogador = new Jogador[5000];
@@ -210,6 +205,7 @@ public class Main {
         String entradaId;
         String entrada = MyIO.readLine();
 
+        //Leitura da entrada padrao
         for (int j = 0; j < Integer.parseInt(entrada); j++) {
             entradaId = MyIO.readLine();
             if (isFim(entradaId)){
