@@ -2,17 +2,17 @@ import java.util.*;
 import java.io.*;
 import java.lang.*;
 
-class jogador {
+class Jogador {
     private int id, altura, peso, anoNascimento;
     private String nome,universidade, cidadeNascimento,estadoNascimento;
 
-    public jogador(){
+    public Jogador(){
         this.id = this.altura = this.peso = this.anoNascimento = 0;
         this.nome = this.universidade = this.cidadeNascimento = this.estadoNascimento = "";
     }
 
     //Construtor que recebe parametros
-    public jogador(final int id, final int altura, final int peso, final int anoNascimento, String nome,
+    public Jogador(final int id, final int altura, final int peso, final int anoNascimento, String nome,
                    String universidade, String cidadeNascimento, String estadoNascimento) {
         this.id = id;
         this.altura = altura;
@@ -93,12 +93,14 @@ class jogador {
 
     }
 
-    public void imprimir() {
-        System.out.print("["+ getId() + " ## " + getNome() + " ## " + getAltura() + " ## " + getPeso() + " ## " + getAnoNascimento() + " ## " + getUniversidade() + " ## " + getCidadeNascimento()  + " ## " + getEstadoNascimento()  + "]" + "\n" );
+    //Metodo para imprimir os dados do jogador
+    public String imprimir() {
+        return toString();
     }
 
-    public jogador clone() {
-        jogador novo = new jogador();
+    //Metodo para clonar um objeto
+    public Jogador clone() {
+        Jogador novo = new Jogador();
         novo.id = this.id;
         novo.nome = this.nome;
         novo.altura = this.altura;
@@ -110,45 +112,56 @@ class jogador {
     }
 
     public String toString() {
-        return "[" + id + " ## " + nome + " ## " + altura + " ## " + peso + " ## " + anoNascimento + " ## "
-                + universidade + " ## " + cidadeNascimento + " ## " + estadoNascimento + "]";
+        return "[" +
+                id +
+                " ## " + nome +
+                " ## " + altura +
+                " ## " + peso +
+                " ## " + anoNascimento +
+                " ## " + universidade +
+                " ## " + cidadeNascimento +
+                " ## " + estadoNascimento +
+                "]";
     }
 
-    public void insert(int i, int array[]) {
+    //Metodo para inserir um elemento em uma posicao especifica
+    public void insert(int i, int[] array) {
         array[i] = getId();
     }
 
 }
+
+
 public class Main {
-
-    public static jogador[] jogador = new jogador[5000];
+    public static Jogador[] jogador = new Jogador[5000];
     public static int contador = 0;
-    private static PrintStream Arq;
 
+    //Metodo para tratar o arquivo
     public static void treatFile(String frase) {
 
-        String[] strResult = new String[8];
-        String str = "";
+        String[] strResult;
+        StringBuilder str = new StringBuilder();
 
         for (int i = 0; i <frase.length(); i++) {
 
-            str += frase.charAt(i);
+            str.append(frase.charAt(i));
 
             if ((i < frase.length()-1 && frase.charAt(i) == ',' && frase.charAt(i + 1) == ',') || (i == frase.length() - 1 && frase.charAt(i) == ',')) {
-                str += "nao informado";
+                str.append("nao informado");
             }
 
 
         }
 
-        strResult = str.split(",");
+        strResult = str.toString().split(",");
         criaPlayer(strResult);
 
     }
 
+    //Metodo para criar um jogador
     public static void criaPlayer (String[] strResult){
 
-        jogador[contador] = new jogador();
+        jogador[contador] = new Jogador();
         jogador[contador].setId(Integer.parseInt(strResult[0]));
         jogador[contador].setNome(strResult[1]);
         jogador[contador].setAltura(Integer.parseInt(strResult[2]));
@@ -160,6 +173,7 @@ public class Main {
     }
 
 
+    //Metodo para ler o arquivo
     public static void readFile() {
         String frase;
         try{
@@ -172,31 +186,27 @@ public class Main {
                     treatFile(frase);
                 contador++;
             }
-        }catch (IOException exception){}
+        }catch (IOException ignored){}
     }
 
-    public static void compara (int entrada, int array[], int n){
+    //Metodo para comparar um elemento com um array
+    public static void compara (int entrada, int[] array, int n){
 
-        boolean verify = false;
-
-        for (int i=0; i<n && !verify; i++){
-            if (array[i] == (entrada)){
-                verify = true;
+        for (int i = 0; i<n; i++){
+            if (array[i] == (entrada)) {
+                break;
             }
         }
-
-
-        if (verify) System.out.print("SIM\n");
-        else System.out.print("NAO\n");
     }
 
+    //Metodo para verificar se a entrada é FIM
     public static boolean isFim(final String s) {
         return (s.charAt(0) == 'F' && s.charAt(1) == 'I' && s.charAt(2) == 'M');
     }
 
+    //Metodo main
     public static void main(final String[] args) {
         readFile();
-        int i=0;
         String entradaId;
         String entrada = MyIO.readLine();
 
@@ -206,8 +216,7 @@ public class Main {
                 break;
             }
             int num = Integer.parseInt(entradaId);
-            System.out.println(jogador[num].toString());
-            i++;
+            System.out.println(jogador[num].imprimir());
         }
     }
 }
