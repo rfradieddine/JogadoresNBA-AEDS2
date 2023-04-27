@@ -184,16 +184,6 @@ public class Main {
         }catch (IOException ignored){}
     }
 
-    //Metodo para comparar um elemento com um array
-    public static void compara (int entrada, int[] array, int n){
-
-        for (int i = 0; i<n; i++){
-            if (array[i] == (entrada)) {
-                break;
-            }
-        }
-    }
-
     //Metodo para verificar se a entrada é FIM
     public static boolean isFim(final String s) {
         return (s.charAt(0) == 'F' && s.charAt(1) == 'I' && s.charAt(2) == 'M');
