@@ -95,7 +95,8 @@ class Jogador {
     }
 
     //Metodo para clonar um objeto
-    public Jogador clone() {
+    public Jogador clone() throws CloneNotSupportedException {
+        Jogador clone = (Jogador) super.clone();
         Jogador novo = new Jogador();
         novo.id = this.id;
         novo.nome = this.nome;
@@ -119,12 +120,6 @@ class Jogador {
                 " ## " + estadoNascimento +
                 "]";
     }
-
-    //Metodo para inserir um elemento em uma posicao especifica
-    public void insert(int i, int[] array) {
-        array[i] = getId();
-    }
-
 }
 
 public class Main {
