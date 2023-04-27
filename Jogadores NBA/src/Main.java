@@ -176,7 +176,9 @@ public class Main {
                     treatFile(frase);
                 contador++;
             }
-        }catch (IOException ignored){}
+        }catch (IOException ignored){
+
+        }
     }
 
     //Metodo para verificar se a entrada é FIM
