@@ -306,7 +306,7 @@ class Celula {
 
 }
 
-public class App {
+public class Main {
     public static void main(String[] args) throws NumberFormatException, Exception {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         Fila filaJogadores = new Fila();

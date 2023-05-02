@@ -4,23 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="86f31764-7ccc-4604-a50d-8ac1fa84de7a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Jogadores NBA/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Jogadores NBA/.idea/git_toolbox_prj.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Jogadores NBA/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Jogadores NBA/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Jogadores NBA/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Jogadores NBA/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Jogadores NBA/Jogadores NBA.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Jogadores NBA/out/production/Jogadores NBA/Jogador.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Jogadores NBA/out/production/Jogadores NBA/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Jogadores NBA/out/production/Jogadores NBA/MyIO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Jogadores NBA/src/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Jogadores NBA/src/MyIO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pub.in" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pub.out" beforeDir="false" />
-    </list>
+    <list default="true" id="86f31764-7ccc-4604-a50d-8ac1fa84de7a" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -42,7 +26,8 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "E:/Desenvolvimento/Estudo/Faculdade/AEDS2 - Engenharia de Software/JogadoresNBA-AEDS2/TP-Pilhas",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "E:/Desenvolvimento/Estudo/Faculdade/AEDS2 - Engenharia de Software",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -60,6 +45,7 @@
       <updated>1682992109593</updated>
       <workItem from="1682992110583" duration="487000" />
       <workItem from="1682992618412" duration="8000" />
+      <workItem from="1682993474902" duration="36000" />
     </task>
     <servers />
   </component>

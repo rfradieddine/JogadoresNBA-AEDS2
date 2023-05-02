@@ -135,126 +135,153 @@ class Jogador {
         }
 
         if (this.estadoNascimento.trim().length() == 0) { // Se o dado esta vazio
-            System.out.printf("nao informado ##\n");
+            System.out.printf("nao informado ## \n");
         } else {
-            System.out.printf("%s ##\n", this.estadoNascimento);
+            System.out.printf("%s ## \n", this.estadoNascimento);
         }
 
     }
 
 }
-class PilhaDinamica {
 
-    private Celula fundo; // Tipo c�lula e guardam o endere�o de mem�ria onde se encontra uma c�lula,
-    // endere�o onde est� o fundo da pilha
-    private Celula topo; // Endere�o no topo
-
-    public PilhaDinamica() { // Criar pilha vazia, criar fundo e topo apontando p/ Sentinela
-
-        Celula sentinela = new Celula(); // Criando a nova celula
-        fundo = topo = sentinela; // Fundo e topo apontando para sentinela
-    }
-
-    public void empilhar(Jogador novo) {
-
-        Celula aux = new Celula();
-        aux.proximo = topo;
-        aux.item = novo;
-
-        // atualização do atributo de controle topo.
-        topo = aux;
-    }
-
-    public Jogador desempilhar() {
-
-        Celula aux; // Criar a celula auxiliar para apontar para onde o topo est�, para poder mexer
-        // com o topo
-        Jogador player = null;
-        if (!pilhaVazia()) {// Verificar se a pilha n�o est� vazia
-            aux = topo;
-            topo = topo.proximo;// Apontar para a proxima celula
-            aux.proximo = null; // Tirando o lixo de memoria
-            player = aux.item;
-        }
-        return player; // Retornando o item
-    }
-
-    public boolean pilhaVazia() {// fundo e topo apontando para o mesmo lugar
-
-        boolean resp;
-        if (fundo == topo)
-            resp = true;
-        else
-            resp = false;
-
-        return resp;
-    }
-
-    public void mostrar() {
-
-        Celula aux;
-        int cont = 0;
-
-        PilhaDinamica invertida = new PilhaDinamica();
-
-        aux = topo;
-        while (aux != fundo) {
-            invertida.empilhar(aux.item);
-            aux = aux.proximo;
-        }
-
-        aux = invertida.topo;
-        while (aux != invertida.fundo) {
-
-            System.out.print("[" + cont + "] ## ");
-
-            System.out.printf("%d ## ", aux.item.getId());
-
-            System.out.printf("%s ## ", aux.item.getNome());
-
-            System.out.printf("%d ## ", aux.item.getAltura());
-
-            System.out.printf("%d ## ", aux.item.getPeso());
-
-            System.out.printf("%d ## ", aux.item.getAnoNascimento());
-
-            if (aux.item.getUniversidade().trim().length() == 0) { // Se o dado esta vazio
-                System.out.printf("nao informado ## ");
-            } else {
-                System.out.printf("%s ## ", aux.item.getUniversidade());
-            }
-
-            if (aux.item.getCidadeNascimento().trim().length() == 0) { // Se o dado esta vazio
-                System.out.printf("nao informado ## ");
-            } else {
-                System.out.printf("%s ## ", aux.item.getCidadeNascimento());
-            }
-
-            if (aux.item.getEstadoNascimento().trim().length() == 0) { // Se o dado esta vazio
-                System.out.printf("nao informado ## \n");
-            } else {
-                System.out.printf("%s ## \n", aux.item.getEstadoNascimento());
-            }
-
-            cont++;
-            aux = aux.proximo;
-        }
-
-    }
-}
 class Celula {
+    Jogador item;
+    Celula proximo;
 
-    Jogador item; // Dados do jogador
-    Celula proximo; // Apontar da frente ate atras na fila
-
-    public Celula() { // Sentinela, n�o fala o item que vai colocar na c�lula
-        this.item = new Jogador();
+    Celula(){
+        item = new Jogador();
         proximo = null;
     }
+}
 
-    public Celula(Jogador player) { // Preencher, o que t�m que colocar na c�lula
-        this.item = player;
-        proximo = null;
+class Lista {
+
+    private int tamanho;
+    private Celula primeiro;
+    private Celula ultimo;
+
+    Lista (){
+        primeiro = new Celula();
+        ultimo = primeiro;
+        tamanho=0;
+    }
+
+    public void inserirInicio (Jogador player){
+        Celula aux = primeiro.proximo;
+        primeiro.proximo = new Celula();
+        primeiro.proximo.proximo = aux;
+
+        primeiro.proximo.item = player.clone();
+
+        tamanho++;
+    }
+
+    public void inserir (Jogador player, int posicao){
+
+        if (posicao == 1)
+            inserirInicio(player);
+
+        else if (posicao == tamanho)
+            inserirFim(player);
+
+        else{
+            Celula find = primeiro;
+
+            for (int i=0 ; i<posicao; i++){
+                find = find.proximo;
+            }
+
+            Celula aux = find.proximo;
+            find.proximo = new Celula();
+            find.proximo.proximo = aux;
+
+            find.proximo.item = player.clone();
+
+            tamanho++;
+        }
+    }
+
+    public void inserirFim (Jogador player){
+        ultimo.proximo = new Celula();
+        ultimo = ultimo.proximo;
+
+        ultimo.item = player.clone();
+
+        tamanho++;
+    }
+
+    public Jogador removerInicio(){
+        if (primeiro == ultimo){
+            System.out.println("Fail to remove: The list is empty");
+            return null;
+        }
+
+        Jogador toReturn = new Jogador();
+        toReturn = primeiro.proximo.item.clone();
+
+        primeiro.proximo = primeiro.proximo.proximo;
+
+        tamanho--;
+
+        return toReturn;
+    }
+
+    public Jogador remover(int posicao){
+        if (primeiro == ultimo){
+            System.out.println("Fail to remove: The list is empty");
+            return null;
+        }
+
+        if (posicao == 1)
+            return removerInicio();
+
+        else if (posicao == tamanho+1)
+            return removerFim();
+
+
+        Celula find = primeiro;
+        for (int i=0;i<posicao;i++){
+            find = find.proximo;
+        }
+
+        Jogador toReturn = new Jogador();
+        toReturn = find.proximo.item.clone();
+
+        find.proximo = find.proximo.proximo;
+
+        tamanho--;
+
+        return toReturn;
+    }
+
+    public Jogador removerFim(){
+        if (primeiro == ultimo){
+            System.out.println("Fail to remove: The list is empty");
+            return null;
+        }
+
+        Jogador toReturn = new Jogador();
+        toReturn = ultimo.item.clone();
+
+        Celula find = primeiro;
+        for (int i=0;i<tamanho-1;i++){
+            find = find.proximo;
+        }
+
+        ultimo = find;
+        ultimo.proximo = null;
+
+        tamanho--;
+
+        return toReturn;
+    }
+
+    public void mostrar(){
+        Celula atual = primeiro.proximo;
+        for (int i=0 ; i<tamanho ; i++ , atual = atual.proximo){
+            System.out.printf("[%d] ", i);
+            atual.item.imprimir();
+        }
     }
 
 }
@@ -297,55 +324,87 @@ class ArquivoTextoLeitura {
     }
 }
 
+class Main {
+    public static void main(String[] args) throws Exception {
 
-public class Main {
-    public static void main(String[] args) throws NumberFormatException, Exception {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        PilhaDinamica stackDinamica = new PilhaDinamica();
+        ArquivoTextoLeitura leitura = new ArquivoTextoLeitura();
 
-        Jogador[] players = preencherJogadores();
+        int qtdJogadores = qtdLinhas(leitura);
 
-        String idInformado = new String();
-        do {
-            idInformado = in.readLine(); // Qual jogador deseja procurar
+        Jogador allPlayers[] = preencherJogadores(leitura, qtdJogadores);
+        Lista list = new Lista();
+        int id;
 
-            if (!(idInformado.equals("FIM"))) {
+        String read;
+        do{
+            read = in.readLine();
 
-                stackDinamica.empilhar(players[Integer.parseInt(idInformado)]);
+            if (!read.equals("FIM")){
+                id = Integer.parseInt(read);
+                list.inserirFim(allPlayers[id]);
             }
 
-        } while (!(idInformado.equals("FIM")));
+        }while(!read.equals("FIM"));
 
-        String[] dadosAcao;
-        Jogador desempilhado = new Jogador();
+        int qtdcomandos = Integer.parseInt(in.readLine());
+        String split[] = new String[3];
+        int tolistUpId;
+        int position=1;
+        for (int i=0;i<3;i++)
+            split[i] = new String();
 
-        int i = 0, id;
-        int qtd = Integer.parseInt(in.readLine());
+        String comando = new String();
+        for (int i=0;i<qtdcomandos;i++){
 
-        while (i < qtd) {
+            comando = in.readLine();
 
-            String acao = in.readLine();
+            if (comando.charAt(0) == 'I'){
 
-            if (acao.charAt(0) == 'I') {
-                dadosAcao = acao.split(" ", 2);
-                id = Integer.parseInt(dadosAcao[1].toString());
-                stackDinamica.empilhar(players[id]);
-            } else if (acao.charAt(0) == 'R') {
-                desempilhado = stackDinamica.desempilhar();
-                System.out.println("(R) " + desempilhado.getNome());
+                split = comando.split(" ");
+                if ( split.length == 2 )
+                    tolistUpId = Integer.parseInt(split[1]);
+                else{
+                    tolistUpId = Integer.parseInt(split[2]);
+                    position = Integer.parseInt(split[1]);
+                }
+
+
+                if (comando.charAt(1) == 'I')
+                    list.inserirInicio(allPlayers[tolistUpId]);
+
+                else if (comando.charAt(1) == 'F')
+                    list.inserirFim(allPlayers[tolistUpId]);
+
+                else if (comando.charAt(1) == '*')
+                    list.inserir(allPlayers[tolistUpId], position);
+
+            }
+            else if (comando.charAt(0) == 'R'){
+
+                if (comando.charAt(1) == 'I')
+                    System.out.println("(R) " + list.removerInicio().getNome());
+
+                else if (comando.charAt(1) == 'F')
+                    System.out.println("(R) " + list.removerFim().getNome());
+
+                else if (comando.charAt(1) == '*'){
+                    position = Integer.parseInt(comando.substring(3, comando.length()));
+                    System.out.println("(R) " + list.remover(position).getNome());
+                }
+
             }
 
-            i++;
         }
 
-        stackDinamica.mostrar();
+        list.mostrar();
 
     }
 
     public static int qtdLinhas(ArquivoTextoLeitura leitura) {
         int qtd = 0;
         String linhaLida = new String();
-        leitura.abrirArquivo("/tmp/jogadores.txt");
+        leitura.abrirArquivo("players.csv");
 
         leitura.ler(); // O cabecalho, tem que pular a primeira linha
         linhaLida = leitura.ler();
@@ -359,16 +418,11 @@ public class Main {
         return qtd; // Retorna a quantidade de jogadores/Quantidade de linhas
     }
 
-    public static Jogador[] preencherJogadores() throws Exception {
-        ArquivoTextoLeitura leitura = new ArquivoTextoLeitura();
-        int qtdJogadores = qtdLinhas(leitura);
-
+    public static Jogador[] preencherJogadores(ArquivoTextoLeitura leitura, int qtdJogadores) throws Exception {
         Jogador atual = new Jogador();
-        Jogador[] todosJogadores = new Jogador[qtdJogadores];
-        for (int i = 0; i < qtdJogadores; i++)
-            todosJogadores[i] = new Jogador();
+        Jogador listaTodosJogadores[] = new Jogador[qtdJogadores]; // Reserva o armazenamento
 
-        leitura.abrirArquivo("/tmp/jogadores.txt");
+        leitura.abrirArquivo("players.csv");
 
         leitura.ler(); // Remove o cabecalho
         for (int i = 0; i < qtdJogadores; i++) {
@@ -393,15 +447,12 @@ public class Main {
             atual.setCidadeNascimento(dadosDaLinha[6].toString());
             atual.setEstadoNascimento(dadosDaLinha[7].toString());
 
-            todosJogadores[i] = atual;
+            listaTodosJogadores[i] = atual.clone();
             atual = new Jogador();
         }
 
         leitura.fecharArquivo();
 
-        return todosJogadores;
+        return listaTodosJogadores;
     }
-
 }
-
-
