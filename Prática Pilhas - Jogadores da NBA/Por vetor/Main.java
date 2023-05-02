@@ -140,18 +140,18 @@ class Pilha {
 
     private int tamanho;
     private int topo;
-    private Jogador players[];
+    private Jogador jogadors[];
 
     Pilha (){
         topo = 0;
         tamanho = 4000;
-        players = new Jogador[tamanho];
+        jogadors = new Jogador[tamanho];
         topo = -1;
     }
     Pilha (int size){
         topo = 0;
         tamanho = size;
-        players = new Jogador[tamanho];
+        jogadors = new Jogador[tamanho];
         topo = -1;
     }
 
@@ -162,7 +162,7 @@ class Pilha {
             topo--;
         }
         else{
-            players[topo] = player.clone();
+            jogadors[topo] = player.clone();
         }
     }
 
@@ -172,8 +172,8 @@ class Pilha {
             return null;
         }
         Jogador aux = new Jogador();
-        aux = players[topo].clone();
-        players[topo] = null;
+        aux = jogadors[topo].clone();
+        jogadors[topo] = null;
         topo--;
         return aux;
     }
@@ -181,7 +181,7 @@ class Pilha {
     public void mostrar(){
         for (int i=0;i<topo+1;i++){
             System.out.printf("[%d] ", i);
-            players[i].imprimir();
+            jogadors[i].imprimir();
         }
     }
 
