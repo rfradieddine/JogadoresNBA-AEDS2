@@ -232,7 +232,7 @@ class Main {
 
         int qtdJogadores = qtdLinhas(leitura);
 
-        Jogador allPlayers[] = preencherJogadores(leitura, qtdJogadores);
+        Jogador allPlayers[] = criaPlayer(leitura, qtdJogadores);
         Pilha stack = new Pilha(qtdJogadores);
         int id;
 
@@ -271,14 +271,14 @@ class Main {
 
     public static int qtdLinhas(ArquivoTextoLeitura leitura) { //conta a quantidade de linhas do arquivo
         int qtd = 0;
-        String linhaLida = new String();
+        String linhaL = new String();
         leitura.abrirArquivo("/tmp/jogadores.txt");
 
         leitura.ler();
-        linhaLida = leitura.ler();
-        while (linhaLida != null) {
+        linhaL = leitura.ler();
+        while (linhaL != null) { //enquanto não chegar no fim do arquivo
             qtd++;
-            linhaLida = leitura.ler();
+            linhaL = leitura.ler();
         }
 
         leitura.fecharArquivo();
@@ -286,9 +286,9 @@ class Main {
         return qtd;
     }
 
-    public static Jogador[] preencherJogadores(ArquivoTextoLeitura leitura, int qtdJogadores) throws Exception {
-        Jogador atual = new Jogador();
-        Jogador listaTodosJogadores[] = new Jogador[qtdJogadores]; //lista de todos os jogadores
+    public static Jogador[] criaPlayer(ArquivoTextoLeitura leitura, int qtdJogadores) throws Exception {
+        Jogador jogadores = new Jogador();
+        Jogador listaJogadores[] = new Jogador[qtdJogadores]; //lista de todos os jogadores
 
         leitura.abrirArquivo("/tmp/jogadores.txt");//abre o arquivo
 
@@ -298,21 +298,21 @@ class Main {
             String[] dadosDaLinha = leitura.ler().split(",", 8); //8 é a quantidade de atributos que cada jogador tem
 
 
-            atual.setId(Integer.parseInt((dadosDaLinha[0].toString())));
-            atual.setNome(dadosDaLinha[1].toString());
-            atual.setAltura(Integer.parseInt((dadosDaLinha[2].toString())));
-            atual.setPeso(Integer.parseInt((dadosDaLinha[3].toString())));
-            atual.setUniversidade(dadosDaLinha[4].toString());
-            atual.setAnoNascimento(Integer.parseInt((dadosDaLinha[5].toString())));
-            atual.setCidadeNascimento(dadosDaLinha[6].toString());
-            atual.setEstadoNascimento(dadosDaLinha[7].toString());
+            jogadores.setId(Integer.parseInt((dadosDaLinha[0].toString())));
+            jogadores.setNome(dadosDaLinha[1].toString());
+            jogadores.setAltura(Integer.parseInt((dadosDaLinha[2].toString())));
+            jogadores.setPeso(Integer.parseInt((dadosDaLinha[3].toString())));
+            jogadores.setUniversidade(dadosDaLinha[4].toString());
+            jogadores.setAnoNascimento(Integer.parseInt((dadosDaLinha[5].toString())));
+            jogadores.setCidadeNascimento(dadosDaLinha[6].toString());
+            jogadores.setEstadoNascimento(dadosDaLinha[7].toString());
 
-            listaTodosJogadores[i] = atual.clone();
-            atual = new Jogador();
+            listaJogadores[i] = jogadores.clone();
+            jogadores = new Jogador();
         }
 
         leitura.fecharArquivo();
 
-        return listaTodosJogadores;
+        return listaJogadores;
     }
 }
