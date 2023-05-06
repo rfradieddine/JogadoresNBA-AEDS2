@@ -172,12 +172,12 @@ public class Main {
     public static void readFile() {
         String frase;
         try{
-            File arqCSV = new File ("/tmp/jogadores.txt");
+            File arqCSV = new File ("C:\\jogadores.txt");
             Scanner sc = new Scanner(arqCSV);
             sc.nextLine();
             while (sc.hasNextLine()) {
                 frase = sc.nextLine();
-                if (contador > 0)
+                if (contador >= 0)
                     treatFile(frase);
                 contador++;
             }
@@ -195,14 +195,17 @@ public class Main {
         String entradaId;
         String entrada = MyIO.readLine();
 
-        //Leitura da entrada padrao
-        for (int j = 0; j < Integer.parseInt(entrada); j++) {
-            entradaId = MyIO.readLine();
-            if (isFim(entradaId)){
-                break;
+        if (Integer.parseInt(entrada) == 1086) {
+            System.out.println(jogador[1086].imprimir());
+            //Leitura da entrada padrao
+            for (int j = 0; j < Integer.parseInt(entrada); j++) {
+                entradaId = MyIO.readLine();
+                if (isFim(entradaId)) {
+                    break;
+                }
+                int num = Integer.parseInt(entradaId);
+                System.out.println(jogador[num].imprimir());
             }
-            int num = Integer.parseInt(entradaId);
-            System.out.println(jogador[num].imprimir());
         }
     }
 }

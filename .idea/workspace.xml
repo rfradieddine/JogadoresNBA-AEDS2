@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="86f31764-7ccc-4604-a50d-8ac1fa84de7a" name="Changes" comment="" />
+    <list default="true" id="86f31764-7ccc-4604-a50d-8ac1fa84de7a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Prática Pilhas - Jogadores da NBA/Memoria Alocada/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Prática Pilhas - Jogadores da NBA/Memoria Alocada/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Prática Pilhas - Jogadores da NBA/Por vetor/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Prática Pilhas - Jogadores da NBA/Por vetor/Main.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -27,7 +31,7 @@
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "E:/Desenvolvimento/Estudo/Faculdade/AEDS2 - Engenharia de Software/JogadoresNBA-AEDS2/Prática Pilhas - Jogadores da NBA",
+    "last_opened_file_path": "E:/Desenvolvimento/Estudo/Faculdade/AEDS2 - Engenharia de Software/JogadoresNBA-AEDS2/Prática Leitura de arquivo-texto - Jogadores da NBA",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -48,6 +52,8 @@
       <workItem from="1682993474902" duration="36000" />
       <workItem from="1682994153076" duration="35000" />
       <workItem from="1682994713541" duration="44000" />
+      <workItem from="1683331358132" duration="132000" />
+      <workItem from="1683331501686" duration="29000" />
     </task>
     <servers />
   </component>

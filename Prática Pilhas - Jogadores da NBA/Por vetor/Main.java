@@ -137,7 +137,6 @@ class Jogador {
 }
 
 class Pilha {
-
     private int tamanho;
     private int topo;
     private Jogador jogadors[];

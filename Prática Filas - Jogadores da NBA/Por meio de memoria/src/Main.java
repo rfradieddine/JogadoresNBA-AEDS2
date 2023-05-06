@@ -2,17 +2,12 @@ import java.io.*;
 
 class Jogador {
 
-    private int id;
-    private String nome = new String();
-    private int altura;
-    private int peso;
-    private String universidade = new String();
-    private int anoNascimento;
-    private String cidadeNascimento = new String();
-    private String estadoNascimento = new String();
+    private int id, altura, peso, anoNascimento;
+    private String nome,universidade, cidadeNascimento,estadoNascimento;
 
     public Jogador() {
-
+        this.id = this.altura = this.peso = this.anoNascimento = 0;
+        this.nome = this.universidade = this.cidadeNascimento = this.estadoNascimento = "";
     }
 
     public Jogador(int id, String nome, int altura, int peso, String universidade, int anoNascimento,
@@ -27,73 +22,70 @@ class Jogador {
         this.estadoNascimento = estadoNascimento;
     }
 
-    // In�cio GETS
-    public int getId() {
-        return this.id;
-    }
-
-    public String getNome() {
-        return this.nome;
-    }
-
-    public int getAltura() {
-        return this.altura;
-    }
-
-    public int getPeso() {
-        return this.peso;
-    }
-
-    public String getUniversidade() {
-        return this.universidade;
-    }
-
-    public int getAnoNascimento() {
-        return this.anoNascimento;
-    }
-
-    public String getCidadeNascimento() {
-        return this.cidadeNascimento;
-    }
-
-    public String getEstadoNascimento() {
-        return this.estadoNascimento;
-    }
-    // Fim GETS
-
-    // In�cio SETS
-    public void setId(int id) {
+    public void setId( int id) {
         this.id = id;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public int getId() {
+        return this.id;
     }
 
     public void setAltura(int altura) {
         this.altura = altura;
     }
 
+    public int getAltura() {
+        return this.altura;
+    }
+
     public void setPeso(int peso) {
         this.peso = peso;
     }
 
-    public void setUniversidade(String universidade) {
-        this.universidade = universidade;
+    public int getPeso() {
+        return this.peso;
     }
 
     public void setAnoNascimento(int anoNascimento) {
         this.anoNascimento = anoNascimento;
     }
 
+    public int getAnoNascimento() {
+        return this.anoNascimento;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getNome() {
+        return this.nome;
+    }
+
+    public void setUniversidade(String universidade) {
+        this.universidade = universidade;
+    }
+
+    public String getUniversidade() {
+        return this.universidade;
+    }
+
     public void setCidadeNascimento(String cidadeNascimento) {
         this.cidadeNascimento = cidadeNascimento;
+    }
+
+    public String getCidadeNascimento() {
+        return this.cidadeNascimento;
+
     }
 
     public void setEstadoNascimento(String estadoNascimento) {
         this.estadoNascimento = estadoNascimento;
     }
-    // Fim SETS
+
+    public String getEstadoNascimento() {
+        return this.estadoNascimento;
+    }
 
     public Jogador clone() {
 
@@ -428,15 +420,6 @@ class Main {
         for (int i = 0; i < qtdJogadores; i++) {
 
             String[] dadosDaLinha = leitura.ler().split(",", 8); // Dividir os dados da linha
-
-            // Caso necessite de remover os asterisco s� tirar o comen�rio das linhas abaixo
-            /*
-             * String nome = dadosDaLinha[1].toString(); char ultima =
-             * nome.charAt(nome.length()-1);
-             *
-             * if(ultima=='*') { dadosDaLinha[1]=""; for(int z=0; z<nome.length()-1; z++) {
-             * dadosDaLinha[1] += nome.charAt(z); } }
-             */
 
             atual.setId(Integer.parseInt((dadosDaLinha[0].toString())));
             atual.setNome(dadosDaLinha[1].toString());
