@@ -102,7 +102,7 @@ class Jogador {
         return jogador;
     }
 
-    public void imprimir() {
+    public void imprimir() { // imprimir os dados dos jogadores
 
         System.out.printf("## %d ## ", this.id);
 
@@ -114,19 +114,19 @@ class Jogador {
 
         System.out.printf("%d ## ", this.anoNascimento);
 
-        if (this.universidade.trim().length() == 0) { // Se o dado esta vazio
+        if (this.universidade.trim().length() == 0) {
             System.out.printf("nao informado ## ");
         } else {
             System.out.printf("%s ## ", this.universidade);
         }
 
-        if (this.cidadeNascimento.trim().length() == 0) { // Se o dado esta vazio
+        if (this.cidadeNascimento.trim().length() == 0) {
             System.out.printf("nao informado ## ");
         } else {
             System.out.printf("%s ## ", this.cidadeNascimento);
         }
 
-        if (this.estadoNascimento.trim().length() == 0) { // Se o dado esta vazio
+        if (this.estadoNascimento.trim().length() == 0) {
             System.out.printf("nao informado ##\n");
         } else {
             System.out.printf("%s ##\n", this.estadoNascimento);
@@ -154,7 +154,7 @@ class Pilha {
         topo = -1;
     }
 
-    public void empilhar (Jogador player) throws CloneNotSupportedException {
+    public void empilhar (Jogador player) throws CloneNotSupportedException { //empilhar
         topo++;
         if (topo == tamanho){
             System.out.println("Fail to stack up: Stack is already full");
@@ -165,7 +165,7 @@ class Pilha {
         }
     }
 
-    public Jogador desemplihar() throws CloneNotSupportedException {
+    public Jogador desemplihar() throws CloneNotSupportedException { //desempilhar
         if (topo == -1){
             System.out.println("Fail to unstack: Stack is empty");
             return null;
@@ -177,7 +177,7 @@ class Pilha {
         return aux;
     }
 
-    public void mostrar(){
+    public void mostrar(){ //printar
         for (int i=0;i<topo+1;i++){
             System.out.printf("[%d] ", i);
             jogadors[i].imprimir();
@@ -190,7 +190,7 @@ class ArquivoTextoLeitura {
 
     private BufferedReader entrada;
 
-    public void abrirArquivo(String nomeArquivo) {
+    public void abrirArquivo(String nomeArquivo) { // abre arquivo texto para leitura
 
         try {
             entrada = new BufferedReader(new FileReader(nomeArquivo));
@@ -199,7 +199,7 @@ class ArquivoTextoLeitura {
         }
     }
 
-    public void fecharArquivo() {
+    public void fecharArquivo() { // fecha o arquivo de entrada
 
         try {
             entrada.close();
@@ -208,13 +208,13 @@ class ArquivoTextoLeitura {
         }
     }
 
-    public String ler() {
+    public String ler() { // retorna uma linha do arquivo
 
         String textoEntrada;
 
         try {
             textoEntrada = entrada.readLine();
-        } catch (EOFException excecao) { // Exceção de final de arquivo.
+        } catch (EOFException excecao) {
             return null;
         } catch (IOException excecao) {
             System.out.println("Erro de leitura: " + excecao);
@@ -236,7 +236,7 @@ class Main {
         Pilha stack = new Pilha(qtdJogadores);
         int id;
 
-        String read;
+        String read; //variavel para ler o que o usuario digita
         do{
             read = in.readLine();
 
@@ -269,12 +269,12 @@ class Main {
 
     }
 
-    public static int qtdLinhas(ArquivoTextoLeitura leitura) {
+    public static int qtdLinhas(ArquivoTextoLeitura leitura) { //conta a quantidade de linhas do arquivo
         int qtd = 0;
         String linhaLida = new String();
         leitura.abrirArquivo("/tmp/jogadores.txt");
 
-        leitura.ler(); // O cabecalho, tem que pular a primeira linha
+        leitura.ler();
         linhaLida = leitura.ler();
         while (linhaLida != null) {
             qtd++;
@@ -283,28 +283,20 @@ class Main {
 
         leitura.fecharArquivo();
 
-        return qtd; // Retorna a quantidade de jogadores/Quantidade de linhas
+        return qtd;
     }
 
     public static Jogador[] preencherJogadores(ArquivoTextoLeitura leitura, int qtdJogadores) throws Exception {
         Jogador atual = new Jogador();
-        Jogador listaTodosJogadores[] = new Jogador[qtdJogadores]; // Reserva o armazenamento
+        Jogador listaTodosJogadores[] = new Jogador[qtdJogadores]; //lista de todos os jogadores
 
-        leitura.abrirArquivo("/tmp/jogadores.txt");
+        leitura.abrirArquivo("/tmp/jogadores.txt");//abre o arquivo
 
-        leitura.ler(); // Remove o cabecalho
+        leitura.ler();
         for (int i = 0; i < qtdJogadores; i++) {
 
-            String[] dadosDaLinha = leitura.ler().split(",", 8); // Dividir os dados da linha
+            String[] dadosDaLinha = leitura.ler().split(",", 8); //8 é a quantidade de atributos que cada jogador tem
 
-            // Caso necessite de remover os asterisco s� tirar o comen�rio das linhas abaixo
-            /*
-             * String nome = dadosDaLinha[1].toString(); char ultima =
-             * nome.charAt(nome.length()-1);
-             *
-             * if(ultima=='*') { dadosDaLinha[1]=""; for(int z=0; z<nome.length()-1; z++) {
-             * dadosDaLinha[1] += nome.charAt(z); } }
-             */
 
             atual.setId(Integer.parseInt((dadosDaLinha[0].toString())));
             atual.setNome(dadosDaLinha[1].toString());

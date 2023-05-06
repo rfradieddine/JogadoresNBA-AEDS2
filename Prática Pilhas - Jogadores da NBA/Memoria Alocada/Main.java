@@ -87,7 +87,7 @@ class Jogador {
         return this.estadoNascimento;
     }
 
-    public Jogador clone() {
+    public Jogador clone() { // clone do objeto
 
         Jogador jogador = new Jogador();
         jogador.id = this.id;
@@ -102,7 +102,7 @@ class Jogador {
         return jogador;
     }
 
-    public void imprimir() {
+    public void imprimir() { // imprimir os dados
 
         System.out.printf("## %d ## ", this.id);
 
@@ -114,64 +114,61 @@ class Jogador {
 
         System.out.printf("%d ## ", this.anoNascimento);
 
-        if (this.universidade.trim().length() == 0) { // Se o dado esta vazio
+        if (this.universidade.trim().length() == 0) {
             System.out.printf("nao informado ## ");
         } else {
             System.out.printf("%s ## ", this.universidade);
         }
 
-        if (this.cidadeNascimento.trim().length() == 0) { // Se o dado esta vazio
+        if (this.cidadeNascimento.trim().length() == 0) {
             System.out.printf("nao informado ## ");
         } else {
             System.out.printf("%s ## ", this.cidadeNascimento);
         }
 
-        if (this.estadoNascimento.trim().length() == 0) { // Se o dado esta vazio
+        if (this.estadoNascimento.trim().length() == 0) {
             System.out.printf("nao informado ##\n");
         } else {
             System.out.printf("%s ##\n", this.estadoNascimento);
         }
 
     }
-
 }
 class PilhaDinamica {
 
-    private Celula fundo; // Tipo c�lula e guardam o endere�o de mem�ria onde se encontra uma c�lula,
-    // endere�o onde est� o fundo da pilha
-    private Celula topo; // Endere�o no topo
+    private Celula fundo;
+    private Celula topo;
 
-    public PilhaDinamica() { // Criar pilha vazia, criar fundo e topo apontando p/ Sentinela
+    public PilhaDinamica() {
 
-        Celula sentinela = new Celula(); // Criando a nova celula
-        fundo = topo = sentinela; // Fundo e topo apontando para sentinela
+        Celula sentinela = new Celula();
+        fundo = topo = sentinela;
     }
 
-    public void empilhar(Jogador novo) {
+    public void empilhar(Jogador novo) { // inserir no topo
 
         Celula aux = new Celula();
         aux.proximo = topo;
         aux.item = novo;
 
-        // atualização do atributo de controle topo.
+
         topo = aux;
     }
 
-    public Jogador desempilhar() {
+    public Jogador desempilhar() { // remover o topo
 
-        Celula aux; // Criar a celula auxiliar para apontar para onde o topo est�, para poder mexer
-        // com o topo
+        Celula aux;
+
         Jogador player = null;
-        if (!pilhaVazia()) {// Verificar se a pilha n�o est� vazia
+        if (!pilhaVazia()) {
             aux = topo;
-            topo = topo.proximo;// Apontar para a proxima celula
-            aux.proximo = null; // Tirando o lixo de memoria
-            player = aux.item;
+            topo = topo.proximo;
+            aux.proximo = null;
         }
-        return player; // Retornando o item
+        return player;
     }
 
-    public boolean pilhaVazia() {// fundo e topo apontando para o mesmo lugar
+    public boolean pilhaVazia() {
 
         boolean resp;
         if (fundo == topo)
@@ -182,7 +179,7 @@ class PilhaDinamica {
         return resp;
     }
 
-    public void mostrar() {
+    public void mostrar() { // mostrar os dados
 
         Celula aux;
         int cont = 0;
@@ -210,19 +207,19 @@ class PilhaDinamica {
 
             System.out.printf("%d ## ", aux.item.getAnoNascimento());
 
-            if (aux.item.getUniversidade().trim().length() == 0) { // Se o dado esta vazio
+            if (aux.item.getUniversidade().trim().length() == 0) {
                 System.out.printf("nao informado ## ");
             } else {
                 System.out.printf("%s ## ", aux.item.getUniversidade());
             }
 
-            if (aux.item.getCidadeNascimento().trim().length() == 0) { // Se o dado esta vazio
+            if (aux.item.getCidadeNascimento().trim().length() == 0) {
                 System.out.printf("nao informado ## ");
             } else {
                 System.out.printf("%s ## ", aux.item.getCidadeNascimento());
             }
 
-            if (aux.item.getEstadoNascimento().trim().length() == 0) { // Se o dado esta vazio
+            if (aux.item.getEstadoNascimento().trim().length() == 0) {
                 System.out.printf("nao informado ## \n");
             } else {
                 System.out.printf("%s ## \n", aux.item.getEstadoNascimento());
@@ -236,15 +233,15 @@ class PilhaDinamica {
 }
 class Celula {
 
-    Jogador item; // Dados do jogador
-    Celula proximo; // Apontar da frente ate atras na fila
+    Jogador item;
+    Celula proximo;
 
-    public Celula() { // Sentinela, n�o fala o item que vai colocar na c�lula
+    public Celula() {
         this.item = new Jogador();
         proximo = null;
     }
 
-    public Celula(Jogador player) { // Preencher, o que t�m que colocar na c�lula
+    public Celula(Jogador player) {
         this.item = player;
         proximo = null;
     }
@@ -279,7 +276,7 @@ class ArquivoTextoLeitura {
 
         try {
             textoEntrada = entrada.readLine();
-        } catch (EOFException excecao) { // Exceção de final de arquivo.
+        } catch (EOFException excecao) {
             return null;
         } catch (IOException excecao) {
             System.out.println("Erro de leitura: " + excecao);
@@ -295,11 +292,11 @@ public class Main {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         PilhaDinamica stackDinamica = new PilhaDinamica();
 
-        Jogador[] players = preencherJogadores();
+        Jogador[] players = preencherJogadores(); // preencher o array de jogadores
 
         String idInformado = new String();
-        do {
-            idInformado = in.readLine(); // Qual jogador deseja procurar
+        do { // inserir na pilha
+            idInformado = in.readLine();
 
             if (!(idInformado.equals("FIM"))) {
 
@@ -314,7 +311,7 @@ public class Main {
         int i = 0, id;
         int qtd = Integer.parseInt(in.readLine());
 
-        while (i < qtd) {
+        while (i < qtd) {   // realizar as acoes
 
             String acao = in.readLine();
 
@@ -334,12 +331,12 @@ public class Main {
 
     }
 
-    public static int qtdLinhas(ArquivoTextoLeitura leitura) {
+    public static int qtdLinhas(ArquivoTextoLeitura leitura) { // contar a quantidade de linhas do arquivo
         int qtd = 0;
         String linhaLida = new String();
         leitura.abrirArquivo("/tmp/jogadores.txt");
 
-        leitura.ler(); // O cabecalho, tem que pular a primeira linha
+        leitura.ler();
         linhaLida = leitura.ler();
         while (linhaLida != null) {
             qtd++;
@@ -348,10 +345,10 @@ public class Main {
 
         leitura.fecharArquivo();
 
-        return qtd; // Retorna a quantidade de jogadores/Quantidade de linhas
+        return qtd;
     }
 
-    public static Jogador[] preencherJogadores() throws Exception {
+    public static Jogador[] preencherJogadores() throws Exception { // preencher o array de jogadores
         ArquivoTextoLeitura leitura = new ArquivoTextoLeitura();
         int qtdJogadores = qtdLinhas(leitura);
 
@@ -362,19 +359,11 @@ public class Main {
 
         leitura.abrirArquivo("/tmp/jogadores.txt");
 
-        leitura.ler(); // Remove o cabecalho
+        leitura.ler(); /
         for (int i = 0; i < qtdJogadores; i++) {
 
-            String[] dadosDaLinha = leitura.ler().split(",", 8); // Dividir os dados da linha
+            String[] dadosDaLinha = leitura.ler().split(",", 8);
 
-            // Caso necessite de remover os asterisco s� tirar o comen�rio das linhas abaixo
-            /*
-             * String nome = dadosDaLinha[1].toString(); char ultima =
-             * nome.charAt(nome.length()-1);
-             *
-             * if(ultima=='*') { dadosDaLinha[1]=""; for(int z=0; z<nome.length()-1; z++) {
-             * dadosDaLinha[1] += nome.charAt(z); } }
-             */
 
             atual.setId(Integer.parseInt((dadosDaLinha[0].toString())));
             atual.setNome(dadosDaLinha[1].toString());
