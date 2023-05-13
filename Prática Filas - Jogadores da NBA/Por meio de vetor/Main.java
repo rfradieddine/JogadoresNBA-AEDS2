@@ -7,17 +7,12 @@ import java.io.InputStreamReader;
 
 class Jogador {
 
-    private int id;
-    private String nome = new String();
-    private int altura;
-    private int peso;
-    private String universidade = new String();
-    private int anoNascimento;
-    private String cidadeNascimento = new String();
-    private String estadoNascimento = new String();
+    private int id, altura, peso, anoNascimento;
+    private String nome,universidade, cidadeNascimento,estadoNascimento;
 
     public Jogador() {
-
+        this.id = this.altura = this.peso = this.anoNascimento = 0;
+        this.nome = this.universidade = this.cidadeNascimento = this.estadoNascimento = "";
     }
 
     public Jogador(int id, String nome, int altura, int peso, String universidade, int anoNascimento,
@@ -314,7 +309,7 @@ public class Main {
         Jogador[] jogadores = preencherJogadores();
 
         String idInformado;
-        do {
+        do { // preenchendo a fila
             idInformado = in.readLine();
 
             if (!(idInformado.equals("FIM"))) {
@@ -323,7 +318,7 @@ public class Main {
 
             }
 
-        } while (!(idInformado.equals("FIM")));
+        } while (!(idInformado.equals("FIM"))); // fim do preenchimento da fila
 
         String[] dadosAcao;
         Jogador desenfilierado = new Jogador();
@@ -335,7 +330,7 @@ public class Main {
 
             String acao = in.readLine();
 
-            if (acao.charAt(0) == 'I') {
+            if (acao.charAt(0) == 'I') { // inserir
                 dadosAcao = acao.split(" ", 2);
                 id = Integer.parseInt(dadosAcao[1].toString());
                 filaJogadores.enfileirar(jogadores[id]);
@@ -352,7 +347,7 @@ public class Main {
 
     }
 
-    public static int qtdLinhas(ArquivoTextoLeitura leitura) {
+    public static int qtdLinhas(ArquivoTextoLeitura leitura) { // conta a quantidade de linhas do arquivo
         int qtd = 0;
         String linhaLida = new String();
         leitura.abrirArquivo("/tmp/jogadores.txt");
@@ -369,7 +364,7 @@ public class Main {
         return qtd;
     }
 
-    public static Jogador[] preencherJogadores() throws Exception {
+    public static Jogador[] preencherJogadores() throws Exception { // preenche o array de jogadores
         ArquivoTextoLeitura leitura = new ArquivoTextoLeitura();
         int qtdJogadores = qtdLinhas(leitura);
 
@@ -381,7 +376,7 @@ public class Main {
         leitura.abrirArquivo("/tmp/jogadores.txt");
 
         leitura.ler();
-        for (int i = 0; i < qtdJogadores; i++) {
+        for (int i = 0; i < qtdJogadores; i++) { // preenchendo o array de jogadores
 
             String[] dadosDaLinha = leitura.ler().split(",", 8);
 

@@ -1,25 +1,23 @@
-import java.util.*;
 import java.io.*;
-import java.lang.*;
 
 class Jogador {
+
     private int id, altura, peso, anoNascimento;
     private String nome,universidade, cidadeNascimento,estadoNascimento;
 
-    public Jogador(){
+    public Jogador() {
         this.id = this.altura = this.peso = this.anoNascimento = 0;
         this.nome = this.universidade = this.cidadeNascimento = this.estadoNascimento = "";
     }
 
-    //Construtor que recebe parametros
-    public Jogador(final int id, final int altura, final int peso, final int anoNascimento, String nome,
-                   String universidade, String cidadeNascimento, String estadoNascimento) {
+
+    public Jogador (int id, String nome, int altura, int peso, String universidade, int anoNascimento, String cidadeNascimento, String estadoNascimento) {
         this.id = id;
+        this.nome = nome;
         this.altura = altura;
         this.peso = peso;
-        this.anoNascimento = anoNascimento;
-        this.nome = nome;
         this.universidade = universidade;
+        this.anoNascimento = anoNascimento;
         this.cidadeNascimento = cidadeNascimento;
         this.estadoNascimento = estadoNascimento;
     }
@@ -88,124 +86,171 @@ class Jogador {
     public String getEstadoNascimento() {
         return this.estadoNascimento;
     }
-
-    //Metodo para imprimir os dados do jogador
-    public String imprimir() {
-        return toString();
-    }
-
-    //Metodo para clonar um objeto
     public Jogador clone() {
-        Jogador novo = new Jogador();
-        novo.id = this.id;
-        novo.nome = this.nome;
-        novo.altura = this.altura;
-        novo.peso = this.peso;
-        novo.universidade = this.universidade;
-        novo.cidadeNascimento = this.cidadeNascimento;
-        novo.estadoNascimento = this.estadoNascimento;
-        return novo;
+
+        Jogador jogador = new Jogador();
+        jogador.id = this.id;
+        jogador.nome = this.nome;
+        jogador.altura = this.altura;
+        jogador.peso = this.peso;
+        jogador.universidade = this.universidade;
+        jogador.anoNascimento = this.anoNascimento;
+        jogador.cidadeNascimento = this.cidadeNascimento;
+        jogador.estadoNascimento = this.estadoNascimento;
+
+        return jogador;
     }
 
-    public String toString() {
-        return "[" +
-                id +
-                " ## " + nome +
-                " ## " + altura +
-                " ## " + peso +
-                " ## " + anoNascimento +
-                " ## " + universidade +
-                " ## " + cidadeNascimento +
-                " ## " + estadoNascimento +
-                "]";
+    public void imprimir () {
+
+        System.out.printf("[%d ## ", this.id);
+
+        System.out.printf("%s ## ", this.nome);
+
+        System.out.printf("%d ## ", this.altura);
+
+        System.out.printf("%d ## ", this.peso);
+
+        System.out.printf("%d ## ", this.anoNascimento);
+
+        if (this.universidade.trim().length() == 0) { // se a String for vazia
+            System.out.printf("nao informado ## ");
+        }
+        else {
+            System.out.printf("%s ## ", this.universidade);
+        }
+
+        if (this.cidadeNascimento.trim().length() == 0) {
+            System.out.printf("nao informado ## ");
+        }
+        else {
+            System.out.printf("%s ## ", this.cidadeNascimento);
+        }
+
+        if (this.estadoNascimento.trim().length() == 0) {
+            System.out.printf("nao informado]\n");
+        }
+        else {
+            System.out.printf("%s]\n", this.estadoNascimento);
+        }
+
     }
 
-    //Metodo para inserir um elemento em uma posicao especifica
-    public void insert(int i, int[] array) {
-        array[i] = getId();
-    }
 
 }
 
+class ArquivoTextoLeitura {
+
+    private BufferedReader entrada;
+
+    public void abrirArquivo(String nomeArquivo){
+
+        try {
+            entrada = new BufferedReader(new FileReader(nomeArquivo));
+        }
+        catch (FileNotFoundException excecao) {
+            System.out.println("Arquivo não encontrado");
+        }
+    }
+
+    public void fecharArquivo() {
+
+        try {
+            entrada.close();
+        }
+        catch (IOException excecao) {
+            System.out.println("Erro no fechamento do arquivo de leitura: " + excecao);
+        }
+    }
+
+    public String ler() {
+
+        String textoEntrada;
+
+        try {
+            textoEntrada = entrada.readLine();
+        }
+        catch (EOFException excecao) {
+            return null;
+        }
+        catch (IOException excecao) {
+            System.out.println("Erro de leitura: " + excecao);
+            return null;
+        }
+        return textoEntrada;
+    }
+}
+
 public class Main {
-    public static Jogador[] jogador = new Jogador[5000];
-    public static int contador = 0;
 
-    //Metodo para tratar o arquivo
-    public static void treatFile(String frase) {
+    public static void main(String[] args) throws IOException {
 
-        String[] strResult;
-        StringBuilder str = new StringBuilder();
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        ArquivoTextoLeitura leitura = new ArquivoTextoLeitura();
 
-        for (int i = 0; i <frase.length(); i++) {
+        String idInformado = new String();
 
-            str.append(frase.charAt(i));
+        int qtdJogadores = qtdLinhas(leitura); // conta a quantidade de linhas do arquivo
 
-            if ((i < frase.length()-1 && frase.charAt(i) == ',' && frase.charAt(i + 1) == ',') || (i == frase.length() - 1 && frase.charAt(i) == ',')) {
-                str.append("nao informado");
+        Jogador[] players = preencherVetorJogador(leitura, qtdJogadores);
+
+        do { // enquanto não for digitado FIM
+            idInformado = in.readLine();
+
+            if(!(idInformado.equals("FIM"))) {
+
+                players[Integer.parseInt(idInformado)].imprimir();;
+
             }
 
+        } while ( !(idInformado.equals("FIM")) );
+
+    }
+
+    public static int qtdLinhas (ArquivoTextoLeitura leitura) { // conta a quantidade de linhas do arquivo
+        int qtd=0;
+        String linhaLida = new String();
+        leitura.abrirArquivo("/tmp/jogadores.txt");
+
+        leitura.ler();
+        linhaLida = leitura.ler();
+        while (linhaLida != null){ // enquanto não chegar no fim do arquivo
+            qtd++;
+            linhaLida = leitura.ler();
+        }
+
+        leitura.fecharArquivo();
+
+        return qtd;
+    }
+
+    public static Jogador[] preencherVetorJogador (ArquivoTextoLeitura leitura, int qtdLinhas) { // preenche o vetor de jogadores
+        Jogador[] players = new Jogador[qtdLinhas];
+
+        for(int i=0; i<qtdLinhas; i++)
+            players[i] = new Jogador();
+
+        leitura.abrirArquivo("/tmp/jogadores.txt");
+
+        leitura.ler();
+        for(int i=0; i<qtdLinhas; i++) { // enquanto não chegar no fim do arquivo
+
+            String[] dados = leitura.ler().split(",", 8);
+
+            players[i].setId(Integer.parseInt((dados[0].toString())));
+            players[i].setNome(dados[1].toString());
+            players[i].setAltura(Integer.parseInt((dados[2].toString())));
+            players[i].setPeso(Integer.parseInt((dados[3].toString())));
+            players[i].setUniversidade(dados[4].toString());
+            players[i].setAnoNascimento(Integer.parseInt((dados[5].toString())));
+            players[i].setCidadeNascimento(dados[6].toString());
+            players[i].setEstadoNascimento(dados[7].toString());
 
         }
 
-        strResult = str.toString().split(",");
-        criaPlayer(strResult);
+        leitura.fecharArquivo();
 
+        return players;
     }
 
-    //Metodo para criar um jogador
-    public static void criaPlayer (String[] strResult){
-
-        jogador[contador] = new Jogador();
-        jogador[contador].setId(Integer.parseInt(strResult[0]));
-        jogador[contador].setNome(strResult[1]);
-        jogador[contador].setAltura(Integer.parseInt(strResult[2]));
-        jogador[contador].setPeso(Integer.parseInt(strResult[3]));
-        jogador[contador].setUniversidade(strResult[4]);
-        jogador[contador].setAnoNascimento(Integer.parseInt(strResult[5]));
-        jogador[contador].setCidadeNascimento(strResult[6]);
-        jogador[contador].setEstadoNascimento(strResult[7]);
-    }
-
-
-    //Metodo para ler o arquivo
-    public static void readFile() {
-        String frase;
-        try{
-            File arqCSV = new File ("C:\\jogadores.txt");
-            Scanner sc = new Scanner(arqCSV);
-            sc.nextLine();
-            while (sc.hasNextLine()) {
-                frase = sc.nextLine();
-                if (contador >= 0)
-                    treatFile(frase);
-                contador++;
-            }
-        }catch (IOException ignored){}
-    }
-
-    //Metodo para verificar se a entrada é FIM
-    public static boolean isFim(final String s) {
-        return (s.startsWith("FIM"));
-    }
-
-    //Metodo main
-    public static void main(final String[] args) {
-        readFile();
-        String entradaId;
-        String entrada = MyIO.readLine();
-
-        if (Integer.parseInt(entrada) == 1086) {
-            System.out.println(jogador[1086].imprimir());
-            //Leitura da entrada padrao
-            for (int j = 0; j < Integer.parseInt(entrada); j++) {
-                entradaId = MyIO.readLine();
-                if (isFim(entradaId)) {
-                    break;
-                }
-                int num = Integer.parseInt(entradaId);
-                System.out.println(jogador[num].imprimir());
-            }
-        }
-    }
 }

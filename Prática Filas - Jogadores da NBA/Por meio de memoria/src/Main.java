@@ -137,146 +137,170 @@ class Jogador {
 }
 
 class Celula {
-    Jogador item;
-    Celula proximo;
 
-    Celula(){
-        item = new Jogador();
+    Jogador item; // Dados do jogador
+    Celula proximo; // Apontar da frente ate atras na fila
+
+    public Celula() { // Sentinela
+        this.item = new Jogador();
         proximo = null;
     }
+
+    public Celula(Jogador player) { // Preencher
+        this.item = player;
+        proximo = null;
+    }
+
 }
 
-class Lista {
+class Fila {
 
-    private int tamanho;
-    private Celula primeiro;
-    private Celula ultimo;
+    private Celula frente;
+    private Celula tras;
+    int filaTamanho;
 
-    Lista (){
-        primeiro = new Celula();
-        ultimo = primeiro;
-        tamanho=0;
+    public Fila() {
+        Celula sentinela;
+
+        sentinela = new Celula();
+        frente = sentinela;
+        tras = sentinela;
+        filaTamanho = 0;
     }
 
-    public void inserirInicio (Jogador player){
-        Celula aux = primeiro.proximo;
-        primeiro.proximo = new Celula();
-        primeiro.proximo.proximo = aux;
+    public boolean filaVazia() {
 
-        primeiro.proximo.item = player.clone();
+        boolean resp;
 
-        tamanho++;
+        if (frente == tras)
+            resp = true;
+        else
+            resp = false;
+
+        return resp;
     }
 
-    public void inserir (Jogador player, int posicao){
+    public boolean filaCheia() {
+        boolean resp;
 
-        if (posicao == 1)
-            inserirInicio(player);
+        if (filaTamanho == 5)
+            resp = true;
+        else
+            resp = false;
 
-        else if (posicao == tamanho)
-            inserirFim(player);
+        return resp;
+    }
 
-        else{
-            Celula find = primeiro;
+    public void enfileirar(Jogador novo) {
 
-            for (int i=0 ; i<posicao; i++){
-                find = find.proximo;
+        Celula novaCelula;
+
+        if (!filaCheia()) {
+
+            novaCelula = new Celula(novo);
+            tras.proximo = novaCelula;
+            tras = novaCelula; // ou: tras = tras.proximo;
+            filaTamanho++;
+
+        } else {
+
+            desenfileirar();
+
+            novaCelula = new Celula(novo);
+            tras.proximo = novaCelula;
+            tras = novaCelula; // ou: tras = tras.proximo;
+            filaTamanho++;
+
+        }
+
+    }
+
+    public Jogador desenfileirar() {
+
+        Celula aux;
+
+        aux = frente.proximo; // Na frente da sentinela
+        frente.proximo = aux.proximo; // Sentinela pula uma celula no apontamento
+        aux.proximo = null; // Anula celula desenfileirada
+
+        if (aux == tras)
+            tras = frente;
+
+        filaTamanho--;
+
+        return (aux.item);
+    }
+
+    public void mostrar() {
+
+        int cont = 0;
+        if (!filaVazia()) {
+            Celula aux;
+
+            aux = frente.proximo;
+            while (aux != null) {
+
+                System.out.print("[" + cont + "] ## ");
+
+                System.out.printf("%d ## ", aux.item.getId());
+
+                System.out.printf("%s ## ", aux.item.getNome());
+
+                System.out.printf("%d ## ", aux.item.getAltura());
+
+                System.out.printf("%d ## ", aux.item.getPeso());
+
+                System.out.printf("%d ## ", aux.item.getAnoNascimento());
+
+                if (aux.item.getUniversidade().trim().length() == 0) { // Se o dado esta vazio
+                    System.out.printf("nao informado ## ");
+                } else {
+                    System.out.printf("%s ## ", aux.item.getUniversidade());
+                }
+
+                if (aux.item.getCidadeNascimento().trim().length() == 0) { // Se o dado esta vazio
+                    System.out.printf("nao informado ## ");
+                } else {
+                    System.out.printf("%s ## ", aux.item.getCidadeNascimento());
+                }
+
+                if (aux.item.getEstadoNascimento().trim().length() == 0) { // Se o dado esta vazio
+                    System.out.printf("nao informado ## \n");
+                } else {
+                    System.out.printf("%s ## \n", aux.item.getEstadoNascimento());
+                }
+
+                cont++;
+                aux = aux.proximo;
             }
 
-            Celula aux = find.proximo;
-            find.proximo = new Celula();
-            find.proximo.proximo = aux;
-
-            find.proximo.item = player.clone();
-
-            tamanho++;
         }
     }
 
-    public void inserirFim (Jogador player){
-        ultimo.proximo = new Celula();
-        ultimo = ultimo.proximo;
+    public double obterMediaAltura() {
+        double media;
 
-        ultimo.item = player.clone();
+        int cont = 0;
+        double somatorio = 0.0;
+        if (!filaVazia()) {
+            Celula aux;
 
-        tamanho++;
-    }
+            aux = frente.proximo;
+            while (aux != null) {
 
-    public Jogador removerInicio(){
-        if (primeiro == ultimo){
-            System.out.println("Fail to remove: The list is empty");
-            return null;
+                somatorio += aux.item.getAltura();
+
+                cont++;
+                aux = aux.proximo;
+            }
         }
+        media = somatorio / cont;
 
-        Jogador toReturn = new Jogador();
-        toReturn = primeiro.proximo.item.clone();
-
-        primeiro.proximo = primeiro.proximo.proximo;
-
-        tamanho--;
-
-        return toReturn;
-    }
-
-    public Jogador remover(int posicao){
-        if (primeiro == ultimo){
-            System.out.println("Fail to remove: The list is empty");
-            return null;
-        }
-
-        if (posicao == 1)
-            return removerInicio();
-
-        else if (posicao == tamanho+1)
-            return removerFim();
-
-
-        Celula find = primeiro;
-        for (int i=0;i<posicao;i++){
-            find = find.proximo;
-        }
-
-        Jogador toReturn = new Jogador();
-        toReturn = find.proximo.item.clone();
-
-        find.proximo = find.proximo.proximo;
-
-        tamanho--;
-
-        return toReturn;
-    }
-
-    public Jogador removerFim(){
-        if (primeiro == ultimo){
-            System.out.println("Fail to remove: The list is empty");
-            return null;
-        }
-
-        Jogador toReturn = new Jogador();
-        toReturn = ultimo.item.clone();
-
-        Celula find = primeiro;
-        for (int i=0;i<tamanho-1;i++){
-            find = find.proximo;
-        }
-
-        ultimo = find;
-        ultimo.proximo = null;
-
-        tamanho--;
-
-        return toReturn;
-    }
-
-    public void mostrar(){
-        Celula atual = primeiro.proximo;
-        for (int i=0 ; i<tamanho ; i++ , atual = atual.proximo){
-            System.out.printf("[%d] ", i);
-            atual.item.imprimir();
-        }
+        return Math.round(media);
     }
 
 }
+
 
 class ArquivoTextoLeitura {
 
@@ -293,9 +317,9 @@ class ArquivoTextoLeitura {
 
     public void fecharArquivo() {
 
-        try {
+        try { // try-catch usado para fechar o arquivo
             entrada.close();
-        } catch (IOException excecao) {
+        } catch (IOException excecao) { // Exceção de entrada e saída.
             System.out.println("Erro no fechamento do arquivo de leitura: " + excecao);
         }
     }
@@ -304,7 +328,7 @@ class ArquivoTextoLeitura {
 
         String textoEntrada;
 
-        try {
+        try { // try-catch usado para ler o arquivo
             textoEntrada = entrada.readLine();
         } catch (EOFException excecao) { // Exceção de final de arquivo.
             return null;
@@ -317,125 +341,111 @@ class ArquivoTextoLeitura {
 }
 
 class Main {
-    public static void main(String[] args) throws Exception {
+        public static void main(String[] args) throws NumberFormatException, Exception {
+            BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+            Fila filaJogadores = new Fila();
 
-        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        ArquivoTextoLeitura leitura = new ArquivoTextoLeitura();
+            Jogador[] players = preencherJogadores();
 
-        int qtdJogadores = qtdLinhas(leitura);
+            String idInformado = new String();
+            do {
+                idInformado = in.readLine(); // Qual jogador deseja procurar
 
-        Jogador allPlayers[] = preencherJogadores(leitura, qtdJogadores);
-        Lista list = new Lista();
-        int id;
+                if (!(idInformado.equals("FIM"))) {
 
-        String read;
-        do{
-            read = in.readLine();
+                    filaJogadores.enfileirar(players[Integer.parseInt(idInformado)]);
+                    System.out.println(((int) filaJogadores.obterMediaAltura()));
 
-            if (!read.equals("FIM")){
-                id = Integer.parseInt(read);
-                list.inserirFim(allPlayers[id]);
-            }
-
-        }while(!read.equals("FIM"));
-
-        int qtdcomandos = Integer.parseInt(in.readLine());
-        String split[] = new String[3];
-        int tolistUpId;
-        int position=1;
-        for (int i=0;i<3;i++)
-            split[i] = new String();
-
-        String comando = new String();
-        for (int i=0;i<qtdcomandos;i++){
-
-            comando = in.readLine();
-
-            if (comando.charAt(0) == 'I'){
-
-                split = comando.split(" ");
-                if ( split.length == 2 )
-                    tolistUpId = Integer.parseInt(split[1]);
-                else{
-                    tolistUpId = Integer.parseInt(split[2]);
-                    position = Integer.parseInt(split[1]);
                 }
 
+            } while (!(idInformado.equals("FIM")));
 
-                if (comando.charAt(1) == 'I')
-                    list.inserirInicio(allPlayers[tolistUpId]);
+            String[] dadosAcao;
+            Jogador desenfilierado = new Jogador();
 
-                else if (comando.charAt(1) == 'F')
-                    list.inserirFim(allPlayers[tolistUpId]);
+            int i = 0, id;
+            int qtd = Integer.parseInt(in.readLine());
 
-                else if (comando.charAt(1) == '*')
-                    list.inserir(allPlayers[tolistUpId], position);
+            while (i < qtd) {
 
-            }
-            else if (comando.charAt(0) == 'R'){
+                String acao = in.readLine();
 
-                if (comando.charAt(1) == 'I')
-                    System.out.println("(R) " + list.removerInicio().getNome());
-
-                else if (comando.charAt(1) == 'F')
-                    System.out.println("(R) " + list.removerFim().getNome());
-
-                else if (comando.charAt(1) == '*'){
-                    position = Integer.parseInt(comando.substring(3, comando.length()));
-                    System.out.println("(R) " + list.remover(position).getNome());
+                if (acao.charAt(0) == 'I') {
+                    dadosAcao = acao.split(" ", 2);
+                    id = Integer.parseInt(dadosAcao[1].toString());
+                    filaJogadores.enfileirar(players[id]);
+                    System.out.println(((int) filaJogadores.obterMediaAltura()));
+                } else if (acao.charAt(0) == 'R') {
+                    desenfilierado = filaJogadores.desenfileirar();
+                    System.out.println("(R) " + desenfilierado.getNome());
                 }
 
+                i++;
             }
+
+            filaJogadores.mostrar();
 
         }
 
-        list.mostrar();
+        public static int qtdLinhas(ArquivoTextoLeitura leitura) {
+            int qtd = 0;
+            String linhaLida = new String();
+            leitura.abrirArquivo("/tmp/jogadores.txt");
 
-    }
-
-    public static int qtdLinhas(ArquivoTextoLeitura leitura) {
-        int qtd = 0;
-        String linhaLida = new String();
-        leitura.abrirArquivo("players.csv");
-
-        leitura.ler(); // O cabecalho, tem que pular a primeira linha
-        linhaLida = leitura.ler();
-        while (linhaLida != null) {
-            qtd++;
+            leitura.ler(); // O cabecalho, tem que pular a primeira linha
             linhaLida = leitura.ler();
+            while (linhaLida != null) {
+                qtd++;
+                linhaLida = leitura.ler();
+            }
+
+            leitura.fecharArquivo();
+
+            return qtd; // Retorna a quantidade de jogadores/Quantidade de linhas
         }
 
-        leitura.fecharArquivo();
+        public static Jogador[] preencherJogadores() throws Exception {
+            ArquivoTextoLeitura leitura = new ArquivoTextoLeitura();
+            int qtdJogadores = qtdLinhas(leitura);
 
-        return qtd; // Retorna a quantidade de jogadores/Quantidade de linhas
-    }
+            Jogador atual = new Jogador();
+            Jogador[] todosJogadores = new Jogador[qtdJogadores];
+            for (int i = 0; i < qtdJogadores; i++)
+                todosJogadores[i] = new Jogador();
 
-    public static Jogador[] preencherJogadores(ArquivoTextoLeitura leitura, int qtdJogadores) throws Exception {
-        Jogador atual = new Jogador();
-        Jogador listaTodosJogadores[] = new Jogador[qtdJogadores]; // Reserva o armazenamento
+            leitura.abrirArquivo("/tmp/jogadores.txt");
 
-        leitura.abrirArquivo("players.csv");
+            leitura.ler(); // Remove o cabecalho
+            for (int i = 0; i < qtdJogadores; i++) {
 
-        leitura.ler(); // Remove o cabecalho
-        for (int i = 0; i < qtdJogadores; i++) {
+                String[] dadosDaLinha = leitura.ler().split(",", 8); // Dividir os dados da linha
 
-            String[] dadosDaLinha = leitura.ler().split(",", 8); // Dividir os dados da linha
+                // Caso necessite de remover os asterisco só tirar o comenário das linhas abaixo
+                /*
+                 * String nome = dadosDaLinha[1].toString(); char ultima =
+                 * nome.charAt(nome.length()-1);
+                 *
+                 * if(ultima=='*') { dadosDaLinha[1]=""; for(int z=0; z<nome.length()-1; z++) {
+                 * dadosDaLinha[1] += nome.charAt(z); } }
+                 */
 
-            atual.setId(Integer.parseInt((dadosDaLinha[0].toString())));
-            atual.setNome(dadosDaLinha[1].toString());
-            atual.setAltura(Integer.parseInt((dadosDaLinha[2].toString())));
-            atual.setPeso(Integer.parseInt((dadosDaLinha[3].toString())));
-            atual.setUniversidade(dadosDaLinha[4].toString());
-            atual.setAnoNascimento(Integer.parseInt((dadosDaLinha[5].toString())));
-            atual.setCidadeNascimento(dadosDaLinha[6].toString());
-            atual.setEstadoNascimento(dadosDaLinha[7].toString());
+                atual.setId(Integer.parseInt((dadosDaLinha[0].toString())));
+                atual.setNome(dadosDaLinha[1].toString());
+                atual.setAltura(Integer.parseInt((dadosDaLinha[2].toString())));
+                atual.setPeso(Integer.parseInt((dadosDaLinha[3].toString())));
+                atual.setUniversidade(dadosDaLinha[4].toString());
+                atual.setAnoNascimento(Integer.parseInt((dadosDaLinha[5].toString())));
+                atual.setCidadeNascimento(dadosDaLinha[6].toString());
+                atual.setEstadoNascimento(dadosDaLinha[7].toString());
 
-            listaTodosJogadores[i] = atual.clone();
-            atual = new Jogador();
+                todosJogadores[i] = atual;
+                atual = new Jogador();
+            }
+
+            leitura.fecharArquivo();
+
+            return todosJogadores;
         }
-
-        leitura.fecharArquivo();
-
-        return listaTodosJogadores;
     }
-}
+
+

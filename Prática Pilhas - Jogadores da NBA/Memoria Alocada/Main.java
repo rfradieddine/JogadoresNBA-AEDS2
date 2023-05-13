@@ -156,17 +156,19 @@ class PilhaDinamica {
     }
 
     public Jogador desempilhar() { // remover o topo
-
         Celula aux;
-
         Jogador player = null;
+
         if (!pilhaVazia()) {
             aux = topo;
             topo = topo.proximo;
             aux.proximo = null;
+            player = aux.item; // Armazena o jogador desempilhado na variável 'player'
         }
+
         return player;
     }
+
 
     public boolean pilhaVazia() {
 
@@ -292,7 +294,7 @@ public class Main {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         PilhaDinamica stackDinamica = new PilhaDinamica();
 
-        Jogador[] players = preencherJogadores(); // preencher o array de jogadores
+        Jogador[] players = criaPlayer(); // preencher o array de jogadores
 
         String idInformado = new String();
         do { // inserir na pilha
@@ -306,7 +308,7 @@ public class Main {
         } while (!(idInformado.equals("FIM")));
 
         String[] dadosAcao;
-        Jogador desempilhado = new Jogador();
+        Jogador desempilhado;
 
         int i = 0, id;
         int qtd = Integer.parseInt(in.readLine());
@@ -338,7 +340,7 @@ public class Main {
 
         leitura.ler();
         linhaLida = leitura.ler();
-        while (linhaLida != null) {
+        while (linhaLida != null) { // contar a quantidade de linhas do arquivo
             qtd++;
             linhaLida = leitura.ler();
         }
@@ -348,7 +350,7 @@ public class Main {
         return qtd;
     }
 
-    public static Jogador[] preencherJogadores() throws Exception { // preencher o array de jogadores
+    public static Jogador[] criaPlayer() throws Exception { // preencher o array de jogadores
         ArquivoTextoLeitura leitura = new ArquivoTextoLeitura();
         int qtdJogadores = qtdLinhas(leitura);
 
@@ -359,7 +361,7 @@ public class Main {
 
         leitura.abrirArquivo("/tmp/jogadores.txt");
 
-        leitura.ler(); /
+        leitura.ler();
         for (int i = 0; i < qtdJogadores; i++) {
 
             String[] dadosDaLinha = leitura.ler().split(",", 8);
@@ -384,5 +386,45 @@ public class Main {
     }
 
 }
+
+public class ArquivoTextoLeitura {
+
+    private BufferedReader entrada;
+
+    public void abrirArquivo(String nomeArquivo) {
+
+        try {
+            entrada = new BufferedReader(new FileReader(nomeArquivo));
+        } catch (FileNotFoundException excecao) {
+            System.out.println("Arquivo não encontrado");
+        }
+    }
+
+    public void fecharArquivo() {
+
+        try {
+            entrada.close();
+        } catch (IOException excecao) {
+            System.out.println("Erro no fechamento do arquivo de leitura: " + excecao);
+        }
+    }
+
+    public String ler() {
+
+        String textoEntrada;
+
+        try {
+            textoEntrada = entrada.readLine();
+        } catch (EOFException excecao) { // Exceção de final de arquivo.
+            return null;
+        } catch (IOException excecao) {
+            System.out.println("Erro de leitura: " + excecao);
+            return null;
+        }
+        return textoEntrada;
+    }
+}
+
+
 
 
