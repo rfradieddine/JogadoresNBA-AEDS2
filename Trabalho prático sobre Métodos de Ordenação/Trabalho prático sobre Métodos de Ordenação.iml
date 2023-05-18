@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/Bolha" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Heapsort" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Insercão" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Mergesort" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Quicksort" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Selecao" isTestSource="false" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
