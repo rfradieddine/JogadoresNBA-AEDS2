@@ -4,29 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="86f31764-7ccc-4604-a50d-8ac1fa84de7a" name="Changes" comment="att">
-      <change afterPath="$PROJECT_DIR$/.idea/jpa-buddy.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Prática Filas - Jogadores da NBA/.idea/jpa-buddy.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Prática Leitura de arquivo-texto - Jogadores da NBA/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Prática Leitura de arquivo-texto - Jogadores da NBA/.idea/jpa-buddy.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Prática Leitura de arquivo-texto - Jogadores da NBA/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Prática Leitura de arquivo-texto - Jogadores da NBA/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Prática Leitura de arquivo-texto - Jogadores da NBA/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Prática Leitura de arquivo-texto - Jogadores da NBA/Prática Leitura de arquivo-texto - Jogadores da NBA.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Prática Leitura de arquivo-texto - Jogadores da NBA/out/production/Prática Leitura de arquivo-texto - Jogadores da NBA/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Prática Leitura de arquivo-texto - Jogadores da NBA/out/production/Prática Leitura de arquivo-texto - Jogadores da NBA/.idea/jpa-buddy.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Prática Leitura de arquivo-texto - Jogadores da NBA/out/production/Prática Leitura de arquivo-texto - Jogadores da NBA/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Prática Leitura de arquivo-texto - Jogadores da NBA/out/production/Prática Leitura de arquivo-texto - Jogadores da NBA/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Prática Leitura de arquivo-texto - Jogadores da NBA/out/production/Prática Leitura de arquivo-texto - Jogadores da NBA/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Prática Leitura de arquivo-texto - Jogadores da NBA/out/production/Prática Leitura de arquivo-texto - Jogadores da NBA/Arquivo.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Prática Leitura de arquivo-texto - Jogadores da NBA/out/production/Prática Leitura de arquivo-texto - Jogadores da NBA/Jogador.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Prática Leitura de arquivo-texto - Jogadores da NBA/out/production/Prática Leitura de arquivo-texto - Jogadores da NBA/Main.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Prática Leitura de arquivo-texto - Jogadores da NBA/out/production/Prática Leitura de arquivo-texto - Jogadores da NBA/MyIO.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Prática Pilhas - Jogadores da NBA/.idea/jpa-buddy.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Prática Filas - Jogadores da NBA/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Prática Filas - Jogadores da NBA/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Prática Pilhas - Jogadores da NBA/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Prática Pilhas - Jogadores da NBA/.idea/misc.xml" afterDir="false" />
-    </list>
+    <list default="true" id="86f31764-7ccc-4604-a50d-8ac1fa84de7a" name="Changes" comment="att" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -34,6 +12,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitToolBoxStore">
+    <option name="projectConfigVersion" value="5" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -49,7 +30,7 @@
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "E:/Desenvolvimento/Estudo/Faculdade/AEDS2 - Engenharia de Software/JogadoresNBA-AEDS2/Prática Pilhas - Jogadores da NBA/Memoria Alocada",
+    "last_opened_file_path": "E:/Desenvolvimento/Estudo/Faculdade/AEDS2 - Engenharia de Software/JogadoresNBA-AEDS2",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -73,7 +54,16 @@
       <workItem from="1683331358132" duration="132000" />
       <workItem from="1683331501686" duration="29000" />
       <workItem from="1683337511638" duration="39000" />
+      <workItem from="1684369423161" duration="38000" />
     </task>
+    <task id="LOCAL-00001" summary="att">
+      <created>1684369445412</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1684369445412</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
