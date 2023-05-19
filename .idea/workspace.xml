@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="86f31764-7ccc-4604-a50d-8ac1fa84de7a" name="Changes" comment="att" />
+    <list default="true" id="86f31764-7ccc-4604-a50d-8ac1fa84de7a" name="Changes" comment="att">
+      <change beforePath="$PROJECT_DIR$/Prática Leitura de arquivo-texto - Jogadores da NBA/Prática Leitura de arquivo-texto - Jogadores da NBA.iml" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -30,7 +32,7 @@
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "E:/Desenvolvimento/Estudo/Faculdade/AEDS2 - Engenharia de Software/JogadoresNBA-AEDS2",
+    "last_opened_file_path": "E:/Desenvolvimento/Estudo/Faculdade/AEDS2 - Engenharia de Software/JogadoresNBA-AEDS2/Prática Listas duplamente encadeadas - Jogadores da NBA",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -55,6 +57,7 @@
       <workItem from="1683331501686" duration="29000" />
       <workItem from="1683337511638" duration="39000" />
       <workItem from="1684369423161" duration="38000" />
+      <workItem from="1684515160575" duration="164000" />
     </task>
     <task id="LOCAL-00001" summary="att">
       <created>1684369445412</created>
