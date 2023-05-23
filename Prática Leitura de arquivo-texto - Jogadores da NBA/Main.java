@@ -1,5 +1,4 @@
 import java.io.*;
-
 class Jogador {
 
     private int id, altura, peso, anoNascimento;
@@ -10,8 +9,8 @@ class Jogador {
         this.nome = this.universidade = this.cidadeNascimento = this.estadoNascimento = "";
     }
 
-
-    public Jogador (int id, String nome, int altura, int peso, String universidade, int anoNascimento, String cidadeNascimento, String estadoNascimento) {
+    public Jogador(int id, String nome, int altura, int peso, String universidade, int anoNascimento,
+                   String cidadeNascimento, String estadoNascimento) {
         this.id = id;
         this.nome = nome;
         this.altura = altura;
@@ -86,6 +85,7 @@ class Jogador {
     public String getEstadoNascimento() {
         return this.estadoNascimento;
     }
+
     public Jogador clone() {
 
         Jogador jogador = new Jogador();
@@ -101,9 +101,9 @@ class Jogador {
         return jogador;
     }
 
-    public void imprimir () {
+    public void imprimir() {
 
-        System.out.printf("[%d ## ", this.id);
+        System.out.printf("## %d ## ", this.id);
 
         System.out.printf("%s ## ", this.nome);
 
@@ -113,31 +113,28 @@ class Jogador {
 
         System.out.printf("%d ## ", this.anoNascimento);
 
-        if (this.universidade.trim().length() == 0) { // se a String for vazia
+        if (this.universidade.trim().length() == 0) {
             System.out.printf("nao informado ## ");
-        }
-        else {
+        } else {
             System.out.printf("%s ## ", this.universidade);
         }
 
         if (this.cidadeNascimento.trim().length() == 0) {
             System.out.printf("nao informado ## ");
-        }
-        else {
+        } else {
             System.out.printf("%s ## ", this.cidadeNascimento);
         }
 
         if (this.estadoNascimento.trim().length() == 0) {
-            System.out.printf("nao informado]\n");
-        }
-        else {
-            System.out.printf("%s]\n", this.estadoNascimento);
+            System.out.printf("nao informado ##\n");
+        } else {
+            System.out.printf("%s ##\n", this.estadoNascimento);
         }
 
     }
-
-
 }
+
+
 
 class ArquivoTextoLeitura {
 
@@ -181,40 +178,40 @@ class ArquivoTextoLeitura {
     }
 }
 
-public class Main {
+class Main {
 
     public static void main(String[] args) throws IOException {
 
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         ArquivoTextoLeitura leitura = new ArquivoTextoLeitura();
 
-        String idInformado = new String();
+        String id = new String();
 
-        int qtdJogadores = qtdLinhas(leitura); // conta a quantidade de linhas do arquivo
+        int qtdJogadores = qtdLinhas(leitura);
 
         Jogador[] players = preencherVetorJogador(leitura, qtdJogadores);
 
-        do { // enquanto não for digitado FIM
-            idInformado = in.readLine();
+        do {
+            id = in.readLine();
 
-            if(!(idInformado.equals("FIM"))) {
+            if(!(id.equals("FIM"))) {
 
-                players[Integer.parseInt(idInformado)].imprimir();;
+                players[Integer.parseInt(id)].imprimir();;
 
             }
 
-        } while ( !(idInformado.equals("FIM")) );
+        } while ( !(id.equals("FIM")) );
 
     }
 
-    public static int qtdLinhas (ArquivoTextoLeitura leitura) { // conta a quantidade de linhas do arquivo
+    public static int qtdLinhas (ArquivoTextoLeitura leitura) {
         int qtd=0;
         String linhaLida = new String();
         leitura.abrirArquivo("/tmp/jogadores.txt");
 
         leitura.ler();
         linhaLida = leitura.ler();
-        while (linhaLida != null){ // enquanto não chegar no fim do arquivo
+        while (linhaLida != null){
             qtd++;
             linhaLida = leitura.ler();
         }
@@ -224,33 +221,34 @@ public class Main {
         return qtd;
     }
 
-    public static Jogador[] preencherVetorJogador (ArquivoTextoLeitura leitura, int qtdLinhas) { // preenche o vetor de jogadores
-        Jogador[] players = new Jogador[qtdLinhas];
+    public static Jogador[] preencherVetorJogador (ArquivoTextoLeitura leitura, int linhas) {
+        Jogador[] jogadores = new Jogador[linhas];
 
-        for(int i=0; i<qtdLinhas; i++)
-            players[i] = new Jogador();
+        for(int i=0; i<linhas; i++)
+            jogadores[i] = new Jogador();
 
         leitura.abrirArquivo("/tmp/jogadores.txt");
 
         leitura.ler();
-        for(int i=0; i<qtdLinhas; i++) { // enquanto não chegar no fim do arquivo
+        for(int i=0; i<linhas; i++) {
 
-            String[] dados = leitura.ler().split(",", 8);
+            String[] dadosDaLinha = leitura.ler().split(",", 8);
 
-            players[i].setId(Integer.parseInt((dados[0].toString())));
-            players[i].setNome(dados[1].toString());
-            players[i].setAltura(Integer.parseInt((dados[2].toString())));
-            players[i].setPeso(Integer.parseInt((dados[3].toString())));
-            players[i].setUniversidade(dados[4].toString());
-            players[i].setAnoNascimento(Integer.parseInt((dados[5].toString())));
-            players[i].setCidadeNascimento(dados[6].toString());
-            players[i].setEstadoNascimento(dados[7].toString());
+
+            jogadores[i].setId(Integer.parseInt((dadosDaLinha[0].toString())));
+            jogadores[i].setNome(dadosDaLinha[1].toString());
+            jogadores[i].setAltura(Integer.parseInt((dadosDaLinha[2].toString())));
+            jogadores[i].setPeso(Integer.parseInt((dadosDaLinha[3].toString())));
+            jogadores[i].setUniversidade(dadosDaLinha[4].toString());
+            jogadores[i].setAnoNascimento(Integer.parseInt((dadosDaLinha[5].toString())));
+            jogadores[i].setCidadeNascimento(dadosDaLinha[6].toString());
+            jogadores[i].setEstadoNascimento(dadosDaLinha[7].toString());
 
         }
 
         leitura.fecharArquivo();
 
-        return players;
+        return jogadores;
     }
 
 }

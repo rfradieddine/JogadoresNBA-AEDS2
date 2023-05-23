@@ -153,258 +153,172 @@ class Celula {
         this.anterior = null;
     }
 
+    public Jogador getItem() {
+        return item;
+    }
+    public void setItem(Jogador item) {
+        this.item = item;
+    }
+
+    public Celula getProximo() {
+        return proximo;
+    }
+    public void setProximo(Celula proximo) {
+        this.proximo = proximo;
+    }
+
+    public Celula getAnterior() {
+        return anterior;
+    }
+    public void setAnterior(Celula anterior) {
+        this.anterior = anterior;
+    }
+
 }
 
 class ListaDupla {
 
-    private Jogador[] listaJogador;
-
-    private int primeiro;
-    private int ultimo;
-
     private int tamanho;
+    private Celula primeiro;
+    private Celula ultimo;
 
-    public ListaDupla() {
-        listaJogador = new Jogador[3922];
-
-        primeiro = ultimo = 0;
+    ListaDupla (){
+        primeiro = new Celula();
+        ultimo = primeiro;
+        tamanho=0;
     }
 
-    public ListaDupla(int tamanho) {
-        listaJogador = new Jogador[tamanho];
+    public void inserirInicio (Jogador player){
+        Celula aux = primeiro.proximo;
+        primeiro.proximo = new Celula();
+        primeiro.proximo.proximo = aux;
 
-        this.tamanho = tamanho;
-        primeiro = ultimo = 0;
+        primeiro.proximo.item = player.clone();
+
+        tamanho++;
     }
 
-    public boolean listaCheia() {
-        boolean resp;
+    public void inserir (Jogador player, int posicao){
 
-        if (ultimo == tamanho)
-            resp = true;
-        else
-            resp = false;
+        if (posicao == 1)
+            inserirInicio(player);
 
-        return resp;
-    }
+        else if (posicao == tamanho)
+            inserirFim(player);
 
-    public boolean listaVazia() {
-        boolean resp;
+        else{
+            Celula find = primeiro;
 
-        if (primeiro == ultimo)
-            resp = true;
-        else
-            resp = false;
-
-        return resp;
-    }
-
-    public void inserir(Jogador jogador, int posicao) throws Exception {
-
-        if ((posicao >= primeiro) && (posicao <= ultimo)) {
-
-            if (!listaCheia()) {
-
-                for (int j = ultimo; j > posicao; j--) {
-                    listaJogador[j] = listaJogador[j - 1];
-                }
-
-                listaJogador[posicao] = jogador;
-                ultimo++;
-
-            } else {
-                new Exception("Erro ao tentar inserir na lista: a lista est� cheia");
+            for (int i=0 ; i<posicao; i++){
+                find = find.proximo;
             }
 
-        } else {
-            new Exception("Erro ao tentar inserir na lista: posi��o inv�lida! Lista ficaria com buracos");
-        }
+            Celula aux = find.proximo;
+            find.proximo = new Celula();
+            find.proximo.proximo = aux;
 
-    }
+            find.proximo.item = player.clone();
 
-    public void inserirInicio(Jogador jogador) throws Exception {
-
-        int posicao = 0;
-
-        if ((posicao >= primeiro) && (posicao <= ultimo)) {
-
-            if (!listaCheia()) {
-
-                for (int j = ultimo; j > posicao; j--) {
-                    listaJogador[j] = listaJogador[j - 1];
-                }
-
-                listaJogador[posicao] = jogador;
-                ultimo++;
-
-            } else {
-                new Exception("Erro ao tentar inserir na lista: a lista est� cheia");
-            }
-
-        } else {
-            new Exception("Erro ao tentar inserir na lista: posi��o inv�lida! Lista ficaria com buracos");
-        }
-
-    }
-
-    public void inserirFim(Jogador jogador) throws Exception {
-
-        int posicao = ultimo;
-
-        if ((posicao >= primeiro) && (posicao <= ultimo)) {
-
-            if (!listaCheia()) {
-
-                listaJogador[posicao] = jogador;
-                ultimo++;
-
-            } else {
-                new Exception("Erro ao tentar inserir na lista: a lista est� cheia");
-            }
-
-        } else {
-            new Exception("Erro ao tentar inserir na lista: posi��o inv�lida! Lista ficaria com buracos");
-        }
-
-    }
-
-    public Jogador remover(int posicao) throws Exception {
-
-        Jogador retirado = null;
-
-        if ((posicao >= primeiro) && (posicao <= ultimo)) {
-
-            if (!listaVazia()) {
-
-                retirado = listaJogador[posicao].clone();
-                ultimo--;
-                for (int j = posicao; j < ultimo; j++) {
-                    listaJogador[j] = listaJogador[j + 1];
-                }
-
-            } else {
-                new Exception("Erro ao tentar remover na lista: a lista est� vazia");
-            }
-
-        } else {
-            new Exception("Erro ao tentar remover na lista: posi��o inv�lida! Lista n�o possui valor nessa posi��o");
-        }
-
-        return retirado;
-
-    }
-
-    public Jogador removerInicio() throws Exception {
-
-        int posicao = primeiro;
-        Jogador retirado = null;
-
-        if ((posicao >= primeiro) && (posicao <= ultimo)) {
-
-            if (!listaVazia()) {
-
-                retirado = listaJogador[posicao].clone();
-                ultimo--;
-                for (int j = posicao; j < ultimo; j++) {
-                    listaJogador[j] = listaJogador[j + 1];
-                }
-
-            } else {
-                new Exception("Erro ao tentar remover na lista: a lista est� vazia");
-            }
-
-        } else {
-            new Exception("Erro ao tentar remover na lista: posi��o inv�lida! Lista n�o possui valor nessa posi��o");
-        }
-
-        return retirado;
-
-    }
-
-    public Jogador removerFim() throws Exception {
-
-        int posicao = ultimo - 1;
-        Jogador retirado = null;
-
-        if ((posicao >= primeiro) && (posicao <= ultimo)) {
-
-            if (!listaVazia()) {
-
-                retirado = listaJogador[posicao].clone();
-                ultimo--;
-                for (int j = posicao; j < ultimo; j++) {
-                    listaJogador[j] = listaJogador[j + 1];
-                }
-
-            } else {
-                new Exception("Erro ao tentar remover na lista: a lista est� vazia");
-            }
-
-        } else {
-            new Exception("Erro ao tentar remover na lista: posi��o inv�lida! Lista n�o possui valor nessa posi��o");
-        }
-
-        return retirado;
-
-    }
-
-    public Jogador getJogador(int posicao) {
-        Jogador encontrado = null;
-
-        if ((posicao >= primeiro) && (posicao <= ultimo)) {
-
-            if (!listaVazia()) {
-
-                encontrado = listaJogador[posicao];
-
-            } else {
-                new Exception("Erro ao tentar encontrar na lista: a lista est� vazia");
-            }
-
-        } else {
-            new Exception("Erro ao tentar encontrar na lista: posi��o inv�lida! Lista n�o possui valor nessa posi��o");
-        }
-
-        return encontrado;
-    }
-
-    public void mostrar() {
-
-        if (!listaVazia()) {
-
-            for (int aux = primeiro; aux < ultimo; aux++) {
-                System.out.print("[" + aux + "] ## ");
-
-                System.out.printf("%d ## ", listaJogador[aux].getId());
-
-                System.out.printf("%s ## ", listaJogador[aux].getNome());
-
-                System.out.printf("%d ## ", listaJogador[aux].getAltura());
-
-                System.out.printf("%d ## ", listaJogador[aux].getPeso());
-
-                System.out.printf("%d ## ", listaJogador[aux].getAnoNascimento());
-
-                if (listaJogador[aux].getUniversidade().trim().length() == 0) {
-                    System.out.printf("nao informado ## ");
-                } else {
-                    System.out.printf("%s ## ", listaJogador[aux].getUniversidade());
-                }
-
-                if (listaJogador[aux].getCidadeNascimento().trim().length() == 0) {
-                    System.out.printf("nao informado ## ");
-                } else {
-                    System.out.printf("%s ## ", listaJogador[aux].getCidadeNascimento());
-                }
-
-                if (listaJogador[aux].getEstadoNascimento().trim().length() == 0) {
-                    System.out.printf("nao informado ## \n");
-                } else {
-                    System.out.printf("%s ## \n", listaJogador[aux].getEstadoNascimento());
-                }
-            }
+            tamanho++;
         }
     }
+
+    public void inserirFim (Jogador player){
+        Celula novaCelula;
+
+        novaCelula = new Celula(player);
+
+        ultimo.setProximo(novaCelula);
+        novaCelula.setAnterior(ultimo);
+
+        ultimo = novaCelula;
+
+        ultimo.item = player.clone();
+
+        tamanho++;
+    }
+
+    public Jogador removerInicio(){
+        if (primeiro == ultimo){
+            System.out.println("Fail to remove: The list is empty");
+            return null;
+        }
+
+        Jogador toReturn = new Jogador();
+        toReturn = primeiro.proximo.item.clone();
+
+        primeiro.proximo = primeiro.proximo.proximo;
+
+        tamanho--;
+
+        return toReturn;
+    }
+
+    public Jogador remover(int posicao){
+        if (primeiro == ultimo){
+            System.out.println("Fail to remove: The list is empty");
+            return null;
+        }
+
+        if (posicao == 1)
+            return removerInicio();
+
+        else if (posicao == tamanho+1)
+            return removerFim();
+
+
+        Celula find = primeiro;
+        for (int i=0;i<posicao;i++){
+            find = find.proximo;
+        }
+
+        Jogador toReturn = new Jogador();
+        toReturn = find.proximo.item.clone();
+
+        find.proximo = find.proximo.proximo;
+
+        tamanho--;
+
+        return toReturn;
+    }
+
+    public Jogador removerFim(){
+        Celula removida, penultima;
+
+
+        if (primeiro == ultimo){
+            System.out.println("Fail to remove: The list is empty");
+            removida = ultimo;
+            penultima = ultimo.getAnterior();
+            penultima.setProximo(null);
+            removida.setAnterior(null);
+            return null;
+        }
+
+        Jogador toReturn = new Jogador();
+        toReturn = ultimo.item.clone();
+
+        Celula find = primeiro;
+        for (int i=0;i<tamanho-1;i++){
+            find = find.proximo;
+        }
+
+        ultimo = find;
+        ultimo.proximo = null;
+
+        tamanho--;
+
+        return toReturn;
+    }
+
+    public void mostrar(){
+        Celula atual = primeiro.proximo;
+        for (int i=0 ; i<tamanho ; i++ , atual = atual.proximo){
+            System.out.printf("[%d] ", i);
+            atual.item.imprimir();
+        }
+    }
+
 }
 
 class ArquivoTextoLeitura {
@@ -445,87 +359,84 @@ class ArquivoTextoLeitura {
     }
 }
 
-class Main {
-    public static void main(String[] args) throws NumberFormatException, Exception {
+public class Main {
+    public static void main(String[] args) throws Exception {
 
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         ArquivoTextoLeitura leitura = new ArquivoTextoLeitura();
 
-        int qtdJogadores = qtdLinhas(leitura);
+        int jogadorQtd = qtdLinhas(leitura);
 
-        ListaDupla listaTodosJogadores = preencherJogadores(leitura, qtdJogadores);
-        ListaDupla listaJogadores = new ListaDupla(qtdJogadores);
+        Jogador allPlayers[] = preencherJogadores(leitura, jogadorQtd);
+        ListaDupla lista = new ListaDupla();
+        int id;
 
-        String idInformado = new String();
-        do {
-            idInformado = in.readLine();
+        String read;
+        do{
+            read = in.readLine();
 
-            if (!(idInformado.equals("FIM"))) {
+            if (!read.equals("FIM")){
+                id = Integer.parseInt(read);
+                lista.inserirFim(allPlayers[id]);
+            }
+
+        }while(!read.equals("FIM"));
+
+        int qtdCmd = Integer.parseInt(in.readLine());
+        String split[] = new String[3];
+        int tolistUpId;
+        int position=1;
+        for (int i=0;i<3;i++)
+            split[i] = new String();
+
+        String cmd = new String();
+        for (int i=0;i<qtdCmd;i++){
+
+            cmd = in.readLine();
+
+            if (cmd.charAt(0) == 'I'){
+
+                split = cmd.split(" ");
+                if ( split.length == 2 )
+                    tolistUpId = Integer.parseInt(split[1]);
+                else{
+                    tolistUpId = Integer.parseInt(split[2]);
+                    position = Integer.parseInt(split[1]);
+                }
 
 
-                listaJogadores.inserirFim(listaTodosJogadores.getJogador(Integer.parseInt(idInformado)));
+                if (cmd.charAt(1) == 'I')
+                    lista.inserirInicio(allPlayers[tolistUpId]);
+
+                else if (cmd.charAt(1) == 'F')
+                    lista.inserirFim(allPlayers[tolistUpId]);
+
+                else if (cmd.charAt(1) == '*')
+                    lista.inserir(allPlayers[tolistUpId], position);
+
+            }
+            else if (cmd.charAt(0) == 'R'){
+
+                if (cmd.charAt(1) == 'I')
+                    System.out.println("(R) " + lista.removerInicio().getNome());
+
+                else if (cmd.charAt(1) == 'F')
+                    System.out.println("(R) " + lista.removerFim().getNome());
+
+                else if (cmd.charAt(1) == '*'){
+                    position = Integer.parseInt(cmd.substring(3, cmd.length()));
+                    System.out.println("(R) " + lista.remover(position).getNome());
+                }
 
             }
 
-        } while (!(idInformado.equals("FIM")));
-
-        String[] dadosAcao;
-
-        int i = 0;
-        int id, posicao;
-
-        int qtd = Integer.parseInt(in.readLine());
-
-        int removidos = 0;
-        Jogador removido[] = new Jogador[qtd];
-        for (int z = 0; z < qtd; z++)
-            removido[z] = new Jogador();
-
-        while (i < qtd) {
-
-            String acao = in.readLine();
-
-            if (acao.charAt(0) == 'I' && acao.charAt(1) == 'I') {
-                dadosAcao = acao.split(" ", 2);
-                id = Integer.parseInt(dadosAcao[1].toString());
-                listaJogadores.inserirInicio(listaTodosJogadores.getJogador(id));
-            } else if (acao.charAt(0) == 'I' && acao.charAt(1) == '*') {
-                dadosAcao = acao.split(" ", 3);
-                id = Integer.parseInt(dadosAcao[2].toString());
-                posicao = Integer.parseInt(dadosAcao[1].toString());
-                listaJogadores.inserir(listaTodosJogadores.getJogador(id), posicao);
-            } else if (acao.charAt(0) == 'I' && acao.charAt(1) == 'F') {
-                dadosAcao = acao.split(" ", 2);
-                id = Integer.parseInt(dadosAcao[1].toString());
-                listaJogadores.inserirFim(listaTodosJogadores.getJogador(id));
-            } else if (acao.charAt(0) == 'R' && acao.charAt(1) == 'I') {
-                removido[removidos] = listaJogadores.removerInicio();
-            } else if (acao.charAt(0) == 'R' && acao.charAt(1) == '*') {
-                dadosAcao = acao.split(" ", 2);
-                posicao = Integer.parseInt(dadosAcao[1].toString());
-                removido[removidos] = listaJogadores.remover(posicao);
-            } else if (acao.charAt(0) == 'R' && acao.charAt(1) == 'F') {
-                removido[removidos] = listaJogadores.removerFim();
-            }
-
-            if (acao.charAt(0) == 'R') {
-                removidos++;
-            }
-
-            i++;
         }
-
-        for (int z = 0; z < removidos; z++) {
-            System.out.println("(R) " + removido[z].getNome());
-        }
-
-        listaJogadores.mostrar();
-
+        lista.mostrar();
     }
 
     public static int qtdLinhas(ArquivoTextoLeitura leitura) {
         int qtd = 0;
-        String linhaLida = new String();
+        String linhaLida = new String(); // String para receber a linha lida do arquivo
         leitura.abrirArquivo("/tmp/jogadores.txt");
 
         leitura.ler();
@@ -534,42 +445,34 @@ class Main {
             qtd++;
             linhaLida = leitura.ler();
         }
-
         leitura.fecharArquivo();
-
         return qtd;
     }
 
-    public static ListaDupla preencherJogadores(ArquivoTextoLeitura leitura, int qtdJogadores) throws Exception {
-        Jogador atual = new Jogador();
-        ListaDupla listaTodosJogadores = new ListaDupla(qtdJogadores);
+    public static Jogador[] preencherJogadores(ArquivoTextoLeitura leitura, int qtdJogadores) throws Exception {
+        Jogador jogadorAtual = new Jogador();
+        Jogador listaJogadores[] = new Jogador[qtdJogadores];
 
-        leitura.abrirArquivo("/tmp/jogadores.txt");
+        leitura.abrirArquivo("/tmp/jogadores.txt"); // Abre o arquivo
 
-        leitura.ler();
+        leitura.ler(); // Remove o cabecalho
         for (int i = 0; i < qtdJogadores; i++) {
 
-            String[] dadosDaLinha = leitura.ler().split(",", 8);
+            String[] dadosL = leitura.ler().split(",", 8); // Le os dados do jogador atual
 
-            atual.setId(Integer.parseInt((dadosDaLinha[0].toString())));
-            atual.setNome(dadosDaLinha[1].toString());
-            atual.setAltura(Integer.parseInt((dadosDaLinha[2].toString())));
-            atual.setPeso(Integer.parseInt((dadosDaLinha[3].toString())));
-            atual.setUniversidade(dadosDaLinha[4].toString());
-            atual.setAnoNascimento(Integer.parseInt((dadosDaLinha[5].toString())));
-            atual.setCidadeNascimento(dadosDaLinha[6].toString());
-            atual.setEstadoNascimento(dadosDaLinha[7].toString());
+            jogadorAtual.setId(Integer.parseInt((dadosL[0].toString())));
+            jogadorAtual.setNome(dadosL[1].toString());
+            jogadorAtual.setAltura(Integer.parseInt((dadosL[2].toString())));
+            jogadorAtual.setPeso(Integer.parseInt((dadosL[3].toString())));
+            jogadorAtual.setUniversidade(dadosL[4].toString());
+            jogadorAtual.setAnoNascimento(Integer.parseInt((dadosL[5].toString())));
+            jogadorAtual.setCidadeNascimento(dadosL[6].toString());
+            jogadorAtual.setEstadoNascimento(dadosL[7].toString());
+            listaJogadores[i] = jogadorAtual.clone();
 
-            listaTodosJogadores.inserirFim(atual);
-            atual = new Jogador();
+            jogadorAtual = new Jogador();
         }
-
         leitura.fecharArquivo();
-
-        return listaTodosJogadores;
+        return listaJogadores;
     }
-
 }
-
-
-
