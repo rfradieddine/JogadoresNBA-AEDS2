@@ -1,16 +1,18 @@
 import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+
 class Jogador {
 
     private int id, altura, peso, anoNascimento;
-    private String nome,universidade, cidadeNascimento,estadoNascimento;
+    private String universidade, cidadeNascimento, estadoNascimento, nome;
 
-    public Jogador() {
-        this.id = this.altura = this.peso = this.anoNascimento = 0;
-        this.nome = this.universidade = this.cidadeNascimento = this.estadoNascimento = "";
+    public Jogador () {
+
     }
 
-    public Jogador(int id, String nome, int altura, int peso, String universidade, int anoNascimento,
-                   String cidadeNascimento, String estadoNascimento) {
+    public Jogador (int id, String nome, int altura, int peso, String universidade, int anoNascimento, String cidadeNascimento, String estadoNascimento) {
         this.id = id;
         this.nome = nome;
         this.altura = altura;
@@ -21,70 +23,73 @@ class Jogador {
         this.estadoNascimento = estadoNascimento;
     }
 
-    public void setId( int id) {
-        this.id = id;
-    }
-
-    public int getId() {
+    // In�cio GETS
+    public int getId () {
         return this.id;
     }
 
-    public void setAltura(int altura) {
-        this.altura = altura;
+    public String getNome () {
+        return this.nome;
     }
 
     public int getAltura() {
         return this.altura;
     }
 
-    public void setPeso(int peso) {
-        this.peso = peso;
-    }
-
-    public int getPeso() {
+    public int getPeso () {
         return this.peso;
     }
 
-    public void setAnoNascimento(int anoNascimento) {
-        this.anoNascimento = anoNascimento;
-    }
-
-    public int getAnoNascimento() {
-        return this.anoNascimento;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getNome() {
-        return this.nome;
-    }
-
-    public void setUniversidade(String universidade) {
-        this.universidade = universidade;
-    }
-
-    public String getUniversidade() {
+    public String getUniversidade () {
         return this.universidade;
     }
 
-    public void setCidadeNascimento(String cidadeNascimento) {
+    public int getAnoNascimento () {
+        return this.anoNascimento;
+    }
+
+    public String getCidadeNascimento () {
+        return this.cidadeNascimento;
+    }
+
+    public String getEstadoNascimento () {
+        return this.estadoNascimento;
+    }
+    // Fim GETS
+
+    // In�cio SETS
+    public void setId (int id) {
+        this.id = id;
+    }
+
+    public void setNome (String nome) {
+        this.nome = nome;
+    }
+
+    public void setAltura(int altura) {
+        this.altura = altura;
+    }
+
+    public void setPeso (int peso) {
+        this.peso = peso;
+    }
+
+    public void setUniversidade (String universidade) {
+        this.universidade = universidade;
+    }
+
+    public void setAnoNascimento (int anoNascimento) {
+        this.anoNascimento = anoNascimento;
+    }
+
+    public void setCidadeNascimento (String cidadeNascimento) {
         this.cidadeNascimento = cidadeNascimento;
     }
 
-    public String getCidadeNascimento() {
-        return this.cidadeNascimento;
-
-    }
-
-    public void setEstadoNascimento(String estadoNascimento) {
+    public void setEstadoNascimento (String estadoNascimento) {
         this.estadoNascimento = estadoNascimento;
     }
-
-    public String getEstadoNascimento() {
-        return this.estadoNascimento;
-    }
+    // Fim SETS
 
     public Jogador clone() {
 
@@ -101,9 +106,9 @@ class Jogador {
         return jogador;
     }
 
-    public void imprimir() {
+    public void imprimir () {
 
-        System.out.printf("## %d ## ", this.id);
+        System.out.printf("[%d ## ", this.id);
 
         System.out.printf("%s ## ", this.nome);
 
@@ -113,25 +118,30 @@ class Jogador {
 
         System.out.printf("%d ## ", this.anoNascimento);
 
-        if (this.universidade.trim().length() == 0) {
+        if (this.universidade.trim().length() == 0) { // Se o dado esta vazio
             System.out.printf("nao informado ## ");
-        } else {
+        }
+        else {
             System.out.printf("%s ## ", this.universidade);
         }
 
-        if (this.cidadeNascimento.trim().length() == 0) {
+        if (this.cidadeNascimento.trim().length() == 0) { // Se o dado esta vazio
             System.out.printf("nao informado ## ");
-        } else {
+        }
+        else {
             System.out.printf("%s ## ", this.cidadeNascimento);
         }
 
-        if (this.estadoNascimento.trim().length() == 0) {
-            System.out.printf("nao informado ##\n");
-        } else {
-            System.out.printf("%s ##\n", this.estadoNascimento);
+        if (this.estadoNascimento.trim().length() == 0) { // Se o dado esta vazio
+            System.out.printf("nao informado]\n");
+        }
+        else {
+            System.out.printf("%s]\n", this.estadoNascimento);
         }
 
     }
+
+
 }
 
 
@@ -165,7 +175,7 @@ class ArquivoTextoLeitura {
         String textoEntrada;
 
         try {
-            textoEntrada = entrada.readLine();
+            textoEntrada = this.entrada.readLine();
         }
         catch (EOFException excecao) {
             return null;
@@ -185,7 +195,7 @@ class Main {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         ArquivoTextoLeitura leitura = new ArquivoTextoLeitura();
 
-        String id = new String();
+        String id;
 
         int qtdJogadores = qtdLinhas(leitura);
 
@@ -205,20 +215,20 @@ class Main {
     }
 
     public static int qtdLinhas (ArquivoTextoLeitura leitura) {
-        int qtd=0;
-        String linhaLida = new String();
+        int quantidade=0;
+        String linhaLida;
         leitura.abrirArquivo("/tmp/jogadores.txt");
 
         leitura.ler();
         linhaLida = leitura.ler();
         while (linhaLida != null){
-            qtd++;
+            quantidade++;
             linhaLida = leitura.ler();
         }
 
         leitura.fecharArquivo();
 
-        return qtd;
+        return quantidade;
     }
 
     public static Jogador[] preencherVetorJogador (ArquivoTextoLeitura leitura, int linhas) {
@@ -228,21 +238,20 @@ class Main {
             jogadores[i] = new Jogador();
 
         leitura.abrirArquivo("/tmp/jogadores.txt");
-
         leitura.ler();
+
         for(int i=0; i<linhas; i++) {
 
-            String[] dadosDaLinha = leitura.ler().split(",", 8);
+            String[] linhasDados = leitura.ler().split(",", 8);
 
-
-            jogadores[i].setId(Integer.parseInt((dadosDaLinha[0].toString())));
-            jogadores[i].setNome(dadosDaLinha[1].toString());
-            jogadores[i].setAltura(Integer.parseInt((dadosDaLinha[2].toString())));
-            jogadores[i].setPeso(Integer.parseInt((dadosDaLinha[3].toString())));
-            jogadores[i].setUniversidade(dadosDaLinha[4].toString());
-            jogadores[i].setAnoNascimento(Integer.parseInt((dadosDaLinha[5].toString())));
-            jogadores[i].setCidadeNascimento(dadosDaLinha[6].toString());
-            jogadores[i].setEstadoNascimento(dadosDaLinha[7].toString());
+            jogadores[i].setId(Integer.parseInt((linhasDados[0].toString())));
+            jogadores[i].setNome(linhasDados[1].toString());
+            jogadores[i].setAltura(Integer.parseInt((linhasDados[2].toString())));
+            jogadores[i].setPeso(Integer.parseInt((linhasDados[3].toString())));
+            jogadores[i].setUniversidade(linhasDados[4].toString());
+            jogadores[i].setAnoNascimento(Integer.parseInt((linhasDados[5].toString())));
+            jogadores[i].setCidadeNascimento(linhasDados[6].toString());
+            jogadores[i].setEstadoNascimento(linhasDados[7].toString());
 
         }
 
