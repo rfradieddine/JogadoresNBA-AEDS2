@@ -215,20 +215,20 @@ class Main {
     }
 
     public static int qtdLinhas (ArquivoTextoLeitura leitura) {
-        int quantidade=0;
+        int qtd=0;
         String linhaLida;
         leitura.abrirArquivo("/tmp/jogadores.txt");
 
         leitura.ler();
         linhaLida = leitura.ler();
         while (linhaLida != null){
-            quantidade++;
+            qtd++;
             linhaLida = leitura.ler();
         }
 
         leitura.fecharArquivo();
 
-        return quantidade;
+        return qtd;
     }
 
     public static Jogador[] preencherVetorJogador (ArquivoTextoLeitura leitura, int linhas) {

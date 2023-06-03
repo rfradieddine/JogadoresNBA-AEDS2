@@ -7,8 +7,6 @@
     <list default="true" id="8cd8eebb-1dfe-4c5d-b643-f3a57f1d41ff" name="Changes" comment="atualizando primeiro tp">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Prática Leitura de arquivo-texto - Jogadores da NBA/App.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Prática Listas - Jogadores da NBA/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Prática Listas - Jogadores da NBA/.idea/misc.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,6 +63,9 @@
       <workItem from="1685069694985" duration="26000" />
       <workItem from="1685069766510" duration="147000" />
       <workItem from="1685407901045" duration="413000" />
+      <workItem from="1685408334093" duration="267000" />
+      <workItem from="1685750973349" duration="29000" />
+      <workItem from="1685752028421" duration="426000" />
     </task>
     <task id="LOCAL-00001" summary="atualizando primeiro tp">
       <created>1684804191091</created>
@@ -73,7 +74,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684804191091</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="atualizando primeiro tp">
+      <created>1685408559985</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1685408559985</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
