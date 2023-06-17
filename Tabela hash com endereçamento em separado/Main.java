@@ -88,8 +88,7 @@ class Jogador {
     }
 
 
-    public Jogador clone() throws CloneNotSupportedException {
-        Jogador clone = (Jogador) super.clone();
+    public Jogador clone() {
 
         Jogador jogador = new Jogador();
         jogador.id = this.id;
@@ -116,21 +115,21 @@ class Jogador {
 
         System.out.printf("%d ## ", this.anoNascimento);
 
-        if (this.universidade.trim().length() == 0) { // Se o dado esta vazio
+        if (this.universidade.trim().length() == 0) {
             System.out.printf("nao informado ## ");
         }
         else {
             System.out.printf("%s ## ", this.universidade);
         }
 
-        if (this.cidadeNascimento.trim().length() == 0) { // Se o dado esta vazio
+        if (this.cidadeNascimento.trim().length() == 0) {
             System.out.printf("nao informado ## ");
         }
         else {
             System.out.printf("%s ## ", this.cidadeNascimento);
         }
 
-        if (this.estadoNascimento.trim().length() == 0) { // Se o dado esta vazio
+        if (this.estadoNascimento.trim().length() == 0) {
             System.out.printf("nao informado]\n");
         }
         else {
@@ -140,202 +139,161 @@ class Jogador {
     }
 }
 
-class noJogador {
-
+class Celula {
     Jogador item;
-    noJogador direita;
-    noJogador esquerda;
+    Celula proximo;
 
-    public noJogador(Jogador registro) {
-        item = registro;
-        direita = null;
-        esquerda = null;
+    Celula(){
+        item = new Jogador();
+        proximo = null;
     }
-
 }
 
-class ABB {
+class Lista {
 
-    private noJogador raiz;
+    private int tamanho;
+    private Celula primeiro;
+    private Celula ultimo;
     private int comparacoes;
 
-
-    public ABB() {
-        this.comparacoes = 0;
-        raiz = null;
+    public Lista() {
+        primeiro = new Celula();
+        ultimo = primeiro;
+        tamanho = 0;
+        comparacoes = 0;
     }
 
+    public void inserirInicio(Jogador player) {
+        Celula aux = primeiro.proximo;
+        primeiro.proximo = new Celula();
+        primeiro.proximo.proximo = aux;
 
-    public Boolean arvoreVazia() {
-        if (this.raiz == null)
-            return true;
-        else
-            return false;
+        primeiro.proximo.item = player.clone();
+
+        tamanho++;
     }
 
+    public void inserir(Jogador player, int posicao) throws CloneNotSupportedException {
 
-    private noJogador adicionar(noJogador raizArvore, Jogador jogadorNovo) {
+        if (posicao == 1)
+            inserirInicio(player);
 
-        if (raizArvore == null)
-            raizArvore = new noJogador(jogadorNovo);
+        else if (posicao == tamanho)
+            inserirFim(player);
+
         else {
-            if ((raizArvore.item.getNome()).compareTo(jogadorNovo.getNome()) > 0)
-                raizArvore.esquerda = adicionar(raizArvore.esquerda, jogadorNovo);
-            else {
+            Celula find = primeiro;
 
-                if ((raizArvore.item.getNome()).compareTo(jogadorNovo.getNome()) < 0)
-                    raizArvore.direita = adicionar(raizArvore.direita, jogadorNovo);
-                else
-                    System.out.println("O jogador " + jogadorNovo.getNome() + ", cuja id e " + jogadorNovo.getId()
-                            + ", ja foi inserido anteriormente na arvore.");
+            for (int i = 0; i < posicao; i++) {
+                find = find.proximo;
             }
-        }
 
-        return raizArvore;
-    }
+            Celula aux = find.proximo;
+            find.proximo = new Celula();
+            find.proximo.proximo = aux;
 
+            find.proximo.item = player.clone();
 
-    public void inserir(Jogador jogadorNovo) {
-
-        this.raiz = adicionar(this.raiz, jogadorNovo);
-    }
-
-    private noJogador antecessor(noJogador jogadorRetirar, noJogador raizArvore) {
-        if (raizArvore.direita != null) {
-            raizArvore.direita = antecessor(jogadorRetirar, raizArvore.direita);
-            return raizArvore;
-        }
-        else {
-
-            jogadorRetirar.item.setId(raizArvore.item.getId());
-            jogadorRetirar.item.setNome(raizArvore.item.getNome());
-            jogadorRetirar.item.setAltura(raizArvore.item.getAltura());
-            jogadorRetirar.item.setPeso(raizArvore.item.getPeso());
-            jogadorRetirar.item.setUniversidade(raizArvore.item.getNome());
-            jogadorRetirar.item.setAnoNascimento(raizArvore.item.getAnoNascimento());
-            jogadorRetirar.item.setCidadeNascimento(raizArvore.item.getNome());
-            jogadorRetirar.item.setEstadoNascimento(raizArvore.item.getNome());
-
-            return raizArvore.esquerda;
-        }
-    }
-    private noJogador retirar(noJogador raizArvore, String nome) {
-
-        if (raizArvore == null) {
-            System.out.println("O jogador, cuja matricula e " + nome + ", nao foi encontrado.");
-            return raizArvore;
-        } else {
-
-            if (raizArvore.item.getNome().equals(nome)) {
-
-                if (raizArvore.direita == null)
-                    return (raizArvore.esquerda);
-                else
-
-                if (raizArvore.esquerda == null)
-                    return (raizArvore.direita);
-                else {
-
-                    raizArvore.esquerda = antecessor(raizArvore, raizArvore.esquerda);
-
-                    return (raizArvore);
-                }
-            } else {
-                if ((raizArvore.item.getNome()).compareTo(nome) > 0)
-                    raizArvore.esquerda = retirar(raizArvore.esquerda, nome);
-                else
-                    raizArvore.direita = retirar(raizArvore.direita, nome);
-
-                return raizArvore;
-            }
+            tamanho++;
         }
     }
 
-    public void remover(String nomeParaRemover) {
-        this.raiz = retirar(this.raiz, nomeParaRemover);
+    public void inserirFim(Jogador player) {
+        ultimo.proximo = new Celula();
+        ultimo = ultimo.proximo;
+
+        ultimo.item = player.clone();
+
+        tamanho++;
     }
 
-    public void imprimirEmOrdem() {
-        imprimirEmOrdem(raiz);
-    }
-
-    private void imprimirEmOrdem(noJogador raizArvore) {
-
-        if (raizArvore != null) {
-            imprimirEmOrdem(raizArvore.esquerda);
-            System.out.print(raizArvore.item.getNome() + " | ");
-            imprimirEmOrdem(raizArvore.direita);
-        }
-
-    }
-
-    public Jogador menorId() {
-        Jogador menor = null;
-
-        if (!arvoreVazia())
-            menor = pesquisarMenor(raiz).item;
-
-        return menor;
-    }
-
-    private noJogador pesquisarMenor(noJogador raizArvore) {
-
-        if (raizArvore != null)
-            if (raizArvore.esquerda == null)
-                return raizArvore;
-            else
-                return pesquisarMenor(raizArvore.esquerda);
-        else
+    public Jogador removerInicio() {
+        if (primeiro == ultimo) {
+            System.out.println("Fail to remove: The list is empty");
             return null;
-
-    }
-
-    public Jogador buscar(String nomePesquisado) {
-        Jogador pesquisado;
-
-        noJogador resultado = pesquisar(raiz, nomePesquisado);
-
-        if (resultado == null)
-            pesquisado = null;
-        else
-            pesquisado = resultado.item;
-
-        return pesquisado;
-    }
-
-    private noJogador pesquisar(noJogador raizArvore, String nomePesquisado) {
-
-        noJogador pesquisado;
-        this.comparacoes++;
-
-        if (raizArvore == null)
-            pesquisado = null;
-        else {
-            if (raizArvore.item.getNome().equals(nomePesquisado)) {
-                System.out.print(raizArvore.item.getNome() + " ");
-                pesquisado = raizArvore;
-            } else if ((raizArvore.item.getNome()).compareTo(nomePesquisado) > 0) {
-                System.out.print(raizArvore.item.getNome() + " ");
-                pesquisado = pesquisar(raizArvore.esquerda, nomePesquisado);
-            } else {
-                System.out.print(raizArvore.item.getNome() + " ");
-                pesquisado = pesquisar(raizArvore.direita, nomePesquisado);
-            }
         }
 
-        return pesquisado;
+        Jogador toReturn = new Jogador();
+        toReturn = primeiro.proximo.item.clone();
+
+        primeiro.proximo = primeiro.proximo.proximo;
+
+        tamanho--;
+
+        return toReturn;
     }
 
-    public int numJogadores() {
-        return contaNumeroJogadores(raiz);
+    public Jogador remover(int posicao) throws CloneNotSupportedException {
+        if (primeiro == ultimo) {
+            System.out.println("Fail to remove: The list is empty");
+            return null;
+        }
+
+        if (posicao == 1)
+            return removerInicio();
+
+        else if (posicao == tamanho + 1)
+            return removerFim();
+
+        Celula find = primeiro;
+        for (int i = 0; i < posicao; i++) {
+            find = find.proximo;
+        }
+
+        Jogador toReturn = new Jogador();
+        toReturn = find.proximo.item.clone();
+
+        find.proximo = find.proximo.proximo;
+
+        tamanho--;
+
+        return toReturn;
     }
 
-    private int contaNumeroJogadores(noJogador raizArvore) {
+    public Jogador removerFim() {
+        if (primeiro == ultimo) {
+            System.out.println("Fail to remove: The list is empty");
+            return null;
+        }
 
-        if (raizArvore == null)
-            return 0;
-        else
-            return 1 + contaNumeroJogadores(raizArvore.esquerda) + contaNumeroJogadores(raizArvore.direita);
+        Jogador toReturn = new Jogador();
+        toReturn = ultimo.item.clone();
+
+        Celula find = primeiro;
+        for (int i = 0; i < tamanho - 1; i++) {
+            find = find.proximo;
+        }
+
+        ultimo = find;
+        ultimo.proximo = null;
+
+        tamanho--;
+
+        return toReturn;
+    }
+
+    public void mostrar() {
+        Celula atual = primeiro.proximo;
+        for (int i = 0; i < tamanho; i++, atual = atual.proximo) {
+            System.out.printf("[%d] ", i);
+            atual.item.imprimir();
+        }
+    }
+
+    public Jogador localizar(String procurado) {
+        Celula aux;
+        Jogador encontrado = null;
+
+        aux = primeiro.proximo;
+        while (aux != null && encontrado == null) {
+            comparacoes++;
+            if (aux.item.getNome().equals(procurado))
+                encontrado = aux.item;
+            else
+                aux = aux.proximo;
+        }
+
+        return encontrado;
     }
 
     public int getComparacoes() {
@@ -343,6 +301,67 @@ class ABB {
     }
 
 }
+
+class TabelaHash {
+
+    private Lista[] tabela;
+    private int M;
+    private int comparacoes;
+
+    public TabelaHash(int tamanho) {
+        this.M = tamanho;
+        this.tabela = new Lista[tamanho];
+        for (int i = 0; i < tamanho; i++) {
+            this.tabela[i] = new Lista();
+        }
+        this.comparacoes = 0;
+    }
+
+    private int funcaoHash(int x) {
+        return (x % 37);
+    }
+
+    public int inserir(Jogador elemento) throws Exception {
+
+        int posicao = funcaoHash(elemento.getAltura());
+
+        if (tabela[posicao].localizar(elemento.getNome()) == null)
+            tabela[posicao].inserir(elemento, 0);
+        else
+
+            posicao = -1;
+
+        return posicao;
+
+    }
+
+    public Jogador pesquisar(Jogador procurado) {
+        int posicao = funcaoHash(procurado.getAltura());
+
+        Jogador encontrado = tabela[posicao].localizar(procurado.getNome());
+        this.comparacoes = tabela[posicao].getComparacoes();
+        if (encontrado != null)
+            System.out.print(posicao + " ");
+
+        return encontrado;
+    }
+
+    public Jogador remover(int chave) throws Exception {
+        int posicao = funcaoHash(chave);
+        return tabela[posicao].remover(chave);
+    }
+
+    public void imprimir() {
+        for (int i = 0; i < this.M; i++)
+            tabela[i].mostrar();
+    }
+
+    public int getComparacoes() {
+        return this.comparacoes;
+    }
+
+}
+
 
 class ArquivoTextoEscrita {
 
@@ -352,7 +371,9 @@ class ArquivoTextoEscrita {
 
         try {
             saida = new BufferedWriter(new FileWriter(nomeArquivo));
-        } catch (IOException ignored) {
+        } catch (FileNotFoundException excecao) {
+
+        } catch (IOException excecao) {
 
         }
     }
@@ -361,7 +382,7 @@ class ArquivoTextoEscrita {
 
         try {
             saida.close();
-        } catch (IOException ignored) {
+        } catch (IOException excecao) {
 
         }
     }
@@ -371,11 +392,12 @@ class ArquivoTextoEscrita {
         try {
             saida.write(textoEntrada);
             saida.newLine();
-        } catch (IOException ignored) {
+        } catch (IOException excecao) {
 
         }
     }
 }
+
 class ArquivoTextoLeitura {
 
     private BufferedReader entrada;
@@ -414,33 +436,31 @@ class ArquivoTextoLeitura {
     }
 }
 
-
-
 class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
 
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         ArquivoTextoLeitura leitura = new ArquivoTextoLeitura();
 
-        String id;
+        String idInformado;
 
         int qtdJogadores = qtdLinhas(leitura);
 
-        Jogador[] jogadores = preencherVetorJogador(leitura, qtdJogadores);
+        Jogador[] players = preencherVetorJogador(leitura, qtdJogadores);
 
-        ABB arvore = new ABB();
+        TabelaHash tabela = new TabelaHash(37);
 
         do {
-            id = in.readLine();
+            idInformado = in.readLine();
 
-            if (!(id.equals("FIM"))) {
+            if (!(idInformado.equals("FIM"))) {
 
-                arvore.inserir(jogadores[Integer.parseInt(id)]);
+                tabela.inserir(players[Integer.parseInt(idInformado)]);
 
             }
 
-        } while (!(id.equals("FIM")));
+        } while (!(idInformado.equals("FIM")));
 
         String nome;
         long inicio = System.currentTimeMillis();
@@ -449,7 +469,12 @@ class Main {
 
             if (!(nome.equals("FIM"))) {
 
-                if (arvore.buscar(nome) == null)
+                Jogador buscado = null;
+                for (int i = 0; i < players.length; i++)
+                    if (players[i].getNome().equals(nome))
+                        buscado = players[i];
+
+                if (tabela.pesquisar(buscado) == null)
                     System.out.print("NAO\n");
                 else
                     System.out.print("SIM\n");
@@ -459,18 +484,18 @@ class Main {
         } while (!(nome.equals("FIM")));
 
         long fim = System.currentTimeMillis();
-        int comparacoes = arvore.getComparacoes();
+        int comparacoes = tabela.getComparacoes();
         gerarLog(inicio, fim, comparacoes);
 
     }
 
     public static void gerarLog(long inicio, long fim, int comparacoes) {
-        long tempo = fim - inicio;
+        long mili = fim - inicio;
 
         ArquivoTextoEscrita escrita = new ArquivoTextoEscrita();
-        String log = new String("750376,689811,763343\t" + tempo + "\t" + comparacoes);
+        String log = new String("750376,689811,763343\t" + mili + "\t" + comparacoes);
 
-        escrita.abrirArquivo("matricula_arvoreBinaria.txt");
+        escrita.abrirArquivo("matricula_hashSeparado.txt");
         escrita.escrever(log);
         escrita.fecharArquivo();
     }
@@ -499,8 +524,10 @@ class Main {
             jogadores[i] = new Jogador();
 
         leitura.abrirArquivo("/tmp/jogadores.txt");
+
         leitura.ler();
         for (int i = 0; i < qtdLinhas; i++) {
+
             String[] linhasDados = leitura.ler().split(",", 8);
 
             jogadores[i].setId(Integer.parseInt((linhasDados[0].toString())));
@@ -518,4 +545,5 @@ class Main {
 
         return jogadores;
     }
+
 }

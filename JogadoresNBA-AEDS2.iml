@@ -3,9 +3,10 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/TP-Impressão aleatoria" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/TP-Inicial Jogadores" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/TP-Leitura jogadores" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Prática Leitura de arquivo-texto - Jogadores da NBA" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Prática Listas duplamente encadeadas - Jogadores da NBA" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Prática Programação Orientada a Objetos - Jogadores da NBA" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Prática Árvores binárias de busca - Jogadores da NBA" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

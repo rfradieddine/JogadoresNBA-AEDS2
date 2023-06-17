@@ -116,21 +116,21 @@ class Jogador {
 
         System.out.printf("%d ## ", this.anoNascimento);
 
-        if (this.universidade.trim().length() == 0) { // Se o dado esta vazio
+        if (this.universidade.trim().length() == 0) {
             System.out.printf("nao informado ## ");
         }
         else {
             System.out.printf("%s ## ", this.universidade);
         }
 
-        if (this.cidadeNascimento.trim().length() == 0) { // Se o dado esta vazio
+        if (this.cidadeNascimento.trim().length() == 0) {
             System.out.printf("nao informado ## ");
         }
         else {
             System.out.printf("%s ## ", this.cidadeNascimento);
         }
 
-        if (this.estadoNascimento.trim().length() == 0) { // Se o dado esta vazio
+        if (this.estadoNascimento.trim().length() == 0) {
             System.out.printf("nao informado]\n");
         }
         else {
@@ -140,160 +140,88 @@ class Jogador {
     }
 }
 
-class noJogador {
+class NodoJogador {
 
+    NodoJogador esquerda;
+    NodoJogador direita;
     Jogador item;
-    noJogador direita;
-    noJogador esquerda;
+    private int altura;
 
-    public noJogador(Jogador registro) {
-        item = registro;
-        direita = null;
-        esquerda = null;
+    public NodoJogador(Jogador item) {
+        this.item = item;
+        this.esquerda = this.direita = null;
+        this.altura = 0;
+    }
+
+    public int getAltura() {
+        return this.altura;
+    }
+
+    public void setAltura() {
+        int alturaEsquerda;
+        int alturaDireita;
+
+        if (esquerda != null)
+            alturaEsquerda = esquerda.getAltura();
+        else
+            alturaEsquerda = -1;
+
+        if (direita != null)
+            alturaDireita = direita.getAltura();
+        else
+            alturaDireita = -1;
+
+        if (alturaEsquerda >= alturaDireita)
+            this.altura = alturaEsquerda + 1;
+        else
+            this.altura = alturaDireita + 1;
+    }
+
+    public int getFatorBalanceamento() {
+        int alturaEsquerda;
+        int alturaDireita;
+
+        if (esquerda != null)
+            alturaEsquerda = esquerda.getAltura();
+        else
+            alturaEsquerda = -1;
+
+        if (direita != null)
+            alturaDireita = direita.getAltura();
+        else
+            alturaDireita = -1;
+
+        return (alturaEsquerda - alturaDireita);
     }
 
 }
 
-class ABB {
+class ABBavl {
 
-    private noJogador raiz;
+    private NodoJogador raiz;
     private int comparacoes;
 
-
-    public ABB() {
-        this.comparacoes = 0;
+    public ABBavl() {
         raiz = null;
+        this.comparacoes = 0;
     }
 
+    public boolean arvoreVazia() {
 
-    public Boolean arvoreVazia() {
-        if (this.raiz == null)
-            return true;
+        boolean resp;
+
+        if (raiz == null)
+            resp = true;
         else
-            return false;
-    }
+            resp = false;
 
-
-    private noJogador adicionar(noJogador raizArvore, Jogador jogadorNovo) {
-
-        if (raizArvore == null)
-            raizArvore = new noJogador(jogadorNovo);
-        else {
-            if ((raizArvore.item.getNome()).compareTo(jogadorNovo.getNome()) > 0)
-                raizArvore.esquerda = adicionar(raizArvore.esquerda, jogadorNovo);
-            else {
-
-                if ((raizArvore.item.getNome()).compareTo(jogadorNovo.getNome()) < 0)
-                    raizArvore.direita = adicionar(raizArvore.direita, jogadorNovo);
-                else
-                    System.out.println("O jogador " + jogadorNovo.getNome() + ", cuja id e " + jogadorNovo.getId()
-                            + ", ja foi inserido anteriormente na arvore.");
-            }
-        }
-
-        return raizArvore;
-    }
-
-
-    public void inserir(Jogador jogadorNovo) {
-
-        this.raiz = adicionar(this.raiz, jogadorNovo);
-    }
-
-    private noJogador antecessor(noJogador jogadorRetirar, noJogador raizArvore) {
-        if (raizArvore.direita != null) {
-            raizArvore.direita = antecessor(jogadorRetirar, raizArvore.direita);
-            return raizArvore;
-        }
-        else {
-
-            jogadorRetirar.item.setId(raizArvore.item.getId());
-            jogadorRetirar.item.setNome(raizArvore.item.getNome());
-            jogadorRetirar.item.setAltura(raizArvore.item.getAltura());
-            jogadorRetirar.item.setPeso(raizArvore.item.getPeso());
-            jogadorRetirar.item.setUniversidade(raizArvore.item.getNome());
-            jogadorRetirar.item.setAnoNascimento(raizArvore.item.getAnoNascimento());
-            jogadorRetirar.item.setCidadeNascimento(raizArvore.item.getNome());
-            jogadorRetirar.item.setEstadoNascimento(raizArvore.item.getNome());
-
-            return raizArvore.esquerda;
-        }
-    }
-    private noJogador retirar(noJogador raizArvore, String nome) {
-
-        if (raizArvore == null) {
-            System.out.println("O jogador, cuja matricula e " + nome + ", nao foi encontrado.");
-            return raizArvore;
-        } else {
-
-            if (raizArvore.item.getNome().equals(nome)) {
-
-                if (raizArvore.direita == null)
-                    return (raizArvore.esquerda);
-                else
-
-                if (raizArvore.esquerda == null)
-                    return (raizArvore.direita);
-                else {
-
-                    raizArvore.esquerda = antecessor(raizArvore, raizArvore.esquerda);
-
-                    return (raizArvore);
-                }
-            } else {
-                if ((raizArvore.item.getNome()).compareTo(nome) > 0)
-                    raizArvore.esquerda = retirar(raizArvore.esquerda, nome);
-                else
-                    raizArvore.direita = retirar(raizArvore.direita, nome);
-
-                return raizArvore;
-            }
-        }
-    }
-
-    public void remover(String nomeParaRemover) {
-        this.raiz = retirar(this.raiz, nomeParaRemover);
-    }
-
-    public void imprimirEmOrdem() {
-        imprimirEmOrdem(raiz);
-    }
-
-    private void imprimirEmOrdem(noJogador raizArvore) {
-
-        if (raizArvore != null) {
-            imprimirEmOrdem(raizArvore.esquerda);
-            System.out.print(raizArvore.item.getNome() + " | ");
-            imprimirEmOrdem(raizArvore.direita);
-        }
-
-    }
-
-    public Jogador menorId() {
-        Jogador menor = null;
-
-        if (!arvoreVazia())
-            menor = pesquisarMenor(raiz).item;
-
-        return menor;
-    }
-
-    private noJogador pesquisarMenor(noJogador raizArvore) {
-
-        if (raizArvore != null)
-            if (raizArvore.esquerda == null)
-                return raizArvore;
-            else
-                return pesquisarMenor(raizArvore.esquerda);
-        else
-            return null;
-
+        return resp;
     }
 
     public Jogador buscar(String nomePesquisado) {
         Jogador pesquisado;
 
-        noJogador resultado = pesquisar(raiz, nomePesquisado);
+        NodoJogador resultado = pesquisar(raiz, nomePesquisado);
 
         if (resultado == null)
             pesquisado = null;
@@ -303,9 +231,9 @@ class ABB {
         return pesquisado;
     }
 
-    private noJogador pesquisar(noJogador raizArvore, String nomePesquisado) {
+    private NodoJogador pesquisar(NodoJogador raizArvore, String nomePesquisado) {
 
-        noJogador pesquisado;
+        NodoJogador pesquisado;
         this.comparacoes++;
 
         if (raizArvore == null)
@@ -326,22 +254,119 @@ class ABB {
         return pesquisado;
     }
 
-    public int numJogadores() {
-        return contaNumeroJogadores(raiz);
+    private NodoJogador adicionar(NodoJogador raizArvore, Jogador jogadorNovo) {
+        if (raizArvore == null)
+            raizArvore = new NodoJogador(jogadorNovo);
+        else {
+            if ((raizArvore.item.getNome()).compareTo(jogadorNovo.getNome()) > 0)
+                raizArvore.esquerda = adicionar(raizArvore.esquerda, jogadorNovo);
+            else {
+                if ((raizArvore.item.getNome()).compareTo(jogadorNovo.getNome()) < 0)
+                    raizArvore.direita = adicionar(raizArvore.direita, jogadorNovo);
+                else
+                    System.out.println("O jogador " + jogadorNovo.getNome() + ", cuja id e " + jogadorNovo.getId()
+                            + ", ja foi inserido anteriormente na arvore.");
+            }
+        }
+
+        return balancear(raizArvore);
     }
 
-    private int contaNumeroJogadores(noJogador raizArvore) {
+    public void inserir(Jogador jogadorNovo) {
+        this.raiz = adicionar(this.raiz, jogadorNovo);
+    }
 
-        if (raizArvore == null)
-            return 0;
-        else
-            return 1 + contaNumeroJogadores(raizArvore.esquerda) + contaNumeroJogadores(raizArvore.direita);
+    private NodoJogador balancear(NodoJogador raizArvore) {
+        int fatorBalanceamento;
+        int fatorBalanceamentoFilho;
+
+        fatorBalanceamento = raizArvore.getFatorBalanceamento();
+
+        if (fatorBalanceamento >= 2) {
+
+            fatorBalanceamentoFilho = raizArvore.esquerda.getFatorBalanceamento();
+
+
+            if ((fatorBalanceamentoFilho) == 0 || (fatorBalanceamentoFilho == 1))
+                raizArvore = rotacionarDireita(raizArvore);
+
+            else if (fatorBalanceamentoFilho == -1) {
+                raizArvore.esquerda = rotacionarEsquerda(raizArvore.esquerda);
+                raizArvore = rotacionarDireita(raizArvore);
+            }
+        } else if (fatorBalanceamento <= -2) {
+
+            fatorBalanceamentoFilho = raizArvore.direita.getFatorBalanceamento();
+
+            if ((fatorBalanceamentoFilho == -1) || (fatorBalanceamentoFilho == 0)) {
+                raizArvore = rotacionarEsquerda(raizArvore);
+            }
+            else if (fatorBalanceamentoFilho == 1) {
+                raizArvore.direita = rotacionarDireita(raizArvore.direita);
+                raizArvore = rotacionarEsquerda(raizArvore);
+            }
+
+        } else
+            raizArvore.setAltura();
+
+        return raizArvore;
+    }
+
+    private NodoJogador rotacionarEsquerda(NodoJogador p) {
+
+        NodoJogador z;
+        NodoJogador filhoDireitaEsquerda;
+
+        z = p.direita;
+        filhoDireitaEsquerda = z.esquerda;
+
+        z.esquerda = p;
+
+        p.direita = filhoDireitaEsquerda;
+
+
+        p.setAltura();
+        z.setAltura();
+
+        return z;
+    }
+
+    private NodoJogador rotacionarDireita(NodoJogador p) {
+
+        NodoJogador u;
+        NodoJogador filhoEsquerdaDireita;
+
+        u = p.esquerda;
+        filhoEsquerdaDireita = u.direita;
+
+        u.direita = p;
+
+
+        p.esquerda = filhoEsquerdaDireita;
+
+        p.setAltura();
+        u.setAltura();
+
+        return u;
+    }
+
+    public void imprimirEmOrdem() {
+        imprimirEmOrdem(raiz);
+    }
+
+    private void imprimirEmOrdem(NodoJogador raizArvore) {
+
+        if (raizArvore != null) {
+            imprimirEmOrdem(raizArvore.esquerda);
+            System.out.println(raizArvore.item.getNome());
+            imprimirEmOrdem(raizArvore.direita);
+        }
+
     }
 
     public int getComparacoes() {
         return this.comparacoes;
     }
-
 }
 
 class ArquivoTextoEscrita {
@@ -414,8 +439,6 @@ class ArquivoTextoLeitura {
     }
 }
 
-
-
 class Main {
 
     public static void main(String[] args) throws IOException {
@@ -423,24 +446,24 @@ class Main {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         ArquivoTextoLeitura leitura = new ArquivoTextoLeitura();
 
-        String id;
+        String idInformado = new String();
 
         int qtdJogadores = qtdLinhas(leitura);
 
-        Jogador[] jogadores = preencherVetorJogador(leitura, qtdJogadores);
+        Jogador[] players = preencherVetorJogador(leitura, qtdJogadores);
 
-        ABB arvore = new ABB();
+        ABBavl arvore = new ABBavl();
 
         do {
-            id = in.readLine();
+            idInformado = in.readLine();
 
-            if (!(id.equals("FIM"))) {
+            if (!(idInformado.equals("FIM"))) {
 
-                arvore.inserir(jogadores[Integer.parseInt(id)]);
+                arvore.inserir(players[Integer.parseInt(idInformado)]);
 
             }
 
-        } while (!(id.equals("FIM")));
+        } while (!(idInformado.equals("FIM")));
 
         String nome;
         long inicio = System.currentTimeMillis();
@@ -461,24 +484,23 @@ class Main {
         long fim = System.currentTimeMillis();
         int comparacoes = arvore.getComparacoes();
         gerarLog(inicio, fim, comparacoes);
-
     }
 
     public static void gerarLog(long inicio, long fim, int comparacoes) {
-        long tempo = fim - inicio;
+        long mili = fim - inicio;
 
         ArquivoTextoEscrita escrita = new ArquivoTextoEscrita();
-        String log = new String("750376,689811,763343\t" + tempo + "\t" + comparacoes);
+        String log = new String("750376,689811,763343\t" + mili + "\t" + comparacoes);
 
-        escrita.abrirArquivo("matricula_arvoreBinaria.txt");
+        escrita.abrirArquivo("matricula_AVL.txt");
         escrita.escrever(log);
         escrita.fecharArquivo();
     }
 
     public static int qtdLinhas(ArquivoTextoLeitura leitura) {
         int qtd = 0;
-        String linhaLida;
-        leitura.abrirArquivo("/tmp/jogadores.txt");
+        String linhaLida = new String();
+        leitura.abrirArquivo("C:\\jogadores.txt");
 
         leitura.ler();
         linhaLida = leitura.ler();
@@ -498,10 +520,12 @@ class Main {
         for (int i = 0; i < qtdLinhas; i++)
             jogadores[i] = new Jogador();
 
-        leitura.abrirArquivo("/tmp/jogadores.txt");
+        leitura.abrirArquivo("C:\\jogadores.txt");
+
         leitura.ler();
         for (int i = 0; i < qtdLinhas; i++) {
-            String[] linhasDados = leitura.ler().split(",", 8);
+
+            String[] linhasDados = leitura.ler().split(",", 8); // Dividir os dados da linha
 
             jogadores[i].setId(Integer.parseInt((linhasDados[0].toString())));
             jogadores[i].setNome(linhasDados[1].toString());
@@ -518,4 +542,5 @@ class Main {
 
         return jogadores;
     }
+
 }

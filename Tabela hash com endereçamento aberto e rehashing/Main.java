@@ -116,21 +116,21 @@ class Jogador {
 
         System.out.printf("%d ## ", this.anoNascimento);
 
-        if (this.universidade.trim().length() == 0) { // Se o dado esta vazio
+        if (this.universidade.trim().length() == 0) {
             System.out.printf("nao informado ## ");
         }
         else {
             System.out.printf("%s ## ", this.universidade);
         }
 
-        if (this.cidadeNascimento.trim().length() == 0) { // Se o dado esta vazio
+        if (this.cidadeNascimento.trim().length() == 0) {
             System.out.printf("nao informado ## ");
         }
         else {
             System.out.printf("%s ## ", this.cidadeNascimento);
         }
 
-        if (this.estadoNascimento.trim().length() == 0) { // Se o dado esta vazio
+        if (this.estadoNascimento.trim().length() == 0) {
             System.out.printf("nao informado]\n");
         }
         else {
@@ -140,202 +140,69 @@ class Jogador {
     }
 }
 
-class noJogador {
 
-    Jogador item;
-    noJogador direita;
-    noJogador esquerda;
+class tHashEmAberto {
 
-    public noJogador(Jogador registro) {
-        item = registro;
-        direita = null;
-        esquerda = null;
-    }
-
-}
-
-class ABB {
-
-    private noJogador raiz;
+    private int M;
+    private Jogador[] tabela;
     private int comparacoes;
 
-
-    public ABB() {
+    public tHashEmAberto(int tamanho) {
         this.comparacoes = 0;
-        raiz = null;
+        this.M = tamanho;
+        this.tabela = new Jogador[tamanho];
+
+        for (int i = 0; i < tamanho; i++)
+            this.tabela[i] = null;
     }
 
-
-    public Boolean arvoreVazia() {
-        if (this.raiz == null)
-            return true;
-        else
-            return false;
+    public int funcaoHash(int x, int k) {
+        return ((x % M) + k * (x % 23)) % M;
     }
 
+    public Jogador pesquisar(Jogador informado) {
+        int k = 0;
+        int posicao;
+        Jogador procurado = null;
+        while (k < this.M) {
+            this.comparacoes++;
 
-    private noJogador adicionar(noJogador raizArvore, Jogador jogadorNovo) {
+            posicao = funcaoHash(informado.getAltura(), k);
 
-        if (raizArvore == null)
-            raizArvore = new noJogador(jogadorNovo);
-        else {
-            if ((raizArvore.item.getNome()).compareTo(jogadorNovo.getNome()) > 0)
-                raizArvore.esquerda = adicionar(raizArvore.esquerda, jogadorNovo);
-            else {
-
-                if ((raizArvore.item.getNome()).compareTo(jogadorNovo.getNome()) < 0)
-                    raizArvore.direita = adicionar(raizArvore.direita, jogadorNovo);
-                else
-                    System.out.println("O jogador " + jogadorNovo.getNome() + ", cuja id e " + jogadorNovo.getId()
-                            + ", ja foi inserido anteriormente na arvore.");
+            if (tabela[posicao] == null) {
+                procurado = null;
+                k = M;
+            } else if (tabela[posicao].getNome().equals(informado.getNome())) {
+                System.out.print(posicao + " ");
+                procurado = tabela[posicao];
+                k = M;
             }
+
+            k++;
         }
 
-        return raizArvore;
+        return procurado;
+
     }
 
+    public void inserir(Jogador novo) {
+        int k = 0;
+        int posicao;
 
-    public void inserir(Jogador jogadorNovo) {
+        while (k < this.M) {
+            posicao = funcaoHash(novo.getAltura(), k);
 
-        this.raiz = adicionar(this.raiz, jogadorNovo);
-    }
-
-    private noJogador antecessor(noJogador jogadorRetirar, noJogador raizArvore) {
-        if (raizArvore.direita != null) {
-            raizArvore.direita = antecessor(jogadorRetirar, raizArvore.direita);
-            return raizArvore;
-        }
-        else {
-
-            jogadorRetirar.item.setId(raizArvore.item.getId());
-            jogadorRetirar.item.setNome(raizArvore.item.getNome());
-            jogadorRetirar.item.setAltura(raizArvore.item.getAltura());
-            jogadorRetirar.item.setPeso(raizArvore.item.getPeso());
-            jogadorRetirar.item.setUniversidade(raizArvore.item.getNome());
-            jogadorRetirar.item.setAnoNascimento(raizArvore.item.getAnoNascimento());
-            jogadorRetirar.item.setCidadeNascimento(raizArvore.item.getNome());
-            jogadorRetirar.item.setEstadoNascimento(raizArvore.item.getNome());
-
-            return raizArvore.esquerda;
-        }
-    }
-    private noJogador retirar(noJogador raizArvore, String nome) {
-
-        if (raizArvore == null) {
-            System.out.println("O jogador, cuja matricula e " + nome + ", nao foi encontrado.");
-            return raizArvore;
-        } else {
-
-            if (raizArvore.item.getNome().equals(nome)) {
-
-                if (raizArvore.direita == null)
-                    return (raizArvore.esquerda);
-                else
-
-                if (raizArvore.esquerda == null)
-                    return (raizArvore.direita);
-                else {
-
-                    raizArvore.esquerda = antecessor(raizArvore, raizArvore.esquerda);
-
-                    return (raizArvore);
-                }
-            } else {
-                if ((raizArvore.item.getNome()).compareTo(nome) > 0)
-                    raizArvore.esquerda = retirar(raizArvore.esquerda, nome);
-                else
-                    raizArvore.direita = retirar(raizArvore.direita, nome);
-
-                return raizArvore;
+            if (tabela[posicao] == null) {
+                tabela[posicao] = novo;
+                k = M;
+            } else if (tabela[posicao].getNome().equals(novo.getNome())) {
+                System.out.println("Chave ja inserida");
+                k = M;
             }
-        }
-    }
 
-    public void remover(String nomeParaRemover) {
-        this.raiz = retirar(this.raiz, nomeParaRemover);
-    }
-
-    public void imprimirEmOrdem() {
-        imprimirEmOrdem(raiz);
-    }
-
-    private void imprimirEmOrdem(noJogador raizArvore) {
-
-        if (raizArvore != null) {
-            imprimirEmOrdem(raizArvore.esquerda);
-            System.out.print(raizArvore.item.getNome() + " | ");
-            imprimirEmOrdem(raizArvore.direita);
+            k++;
         }
 
-    }
-
-    public Jogador menorId() {
-        Jogador menor = null;
-
-        if (!arvoreVazia())
-            menor = pesquisarMenor(raiz).item;
-
-        return menor;
-    }
-
-    private noJogador pesquisarMenor(noJogador raizArvore) {
-
-        if (raizArvore != null)
-            if (raizArvore.esquerda == null)
-                return raizArvore;
-            else
-                return pesquisarMenor(raizArvore.esquerda);
-        else
-            return null;
-
-    }
-
-    public Jogador buscar(String nomePesquisado) {
-        Jogador pesquisado;
-
-        noJogador resultado = pesquisar(raiz, nomePesquisado);
-
-        if (resultado == null)
-            pesquisado = null;
-        else
-            pesquisado = resultado.item;
-
-        return pesquisado;
-    }
-
-    private noJogador pesquisar(noJogador raizArvore, String nomePesquisado) {
-
-        noJogador pesquisado;
-        this.comparacoes++;
-
-        if (raizArvore == null)
-            pesquisado = null;
-        else {
-            if (raizArvore.item.getNome().equals(nomePesquisado)) {
-                System.out.print(raizArvore.item.getNome() + " ");
-                pesquisado = raizArvore;
-            } else if ((raizArvore.item.getNome()).compareTo(nomePesquisado) > 0) {
-                System.out.print(raizArvore.item.getNome() + " ");
-                pesquisado = pesquisar(raizArvore.esquerda, nomePesquisado);
-            } else {
-                System.out.print(raizArvore.item.getNome() + " ");
-                pesquisado = pesquisar(raizArvore.direita, nomePesquisado);
-            }
-        }
-
-        return pesquisado;
-    }
-
-    public int numJogadores() {
-        return contaNumeroJogadores(raiz);
-    }
-
-    private int contaNumeroJogadores(noJogador raizArvore) {
-
-        if (raizArvore == null)
-            return 0;
-        else
-            return 1 + contaNumeroJogadores(raizArvore.esquerda) + contaNumeroJogadores(raizArvore.direita);
     }
 
     public int getComparacoes() {
@@ -343,6 +210,7 @@ class ABB {
     }
 
 }
+
 
 class ArquivoTextoEscrita {
 
@@ -352,7 +220,9 @@ class ArquivoTextoEscrita {
 
         try {
             saida = new BufferedWriter(new FileWriter(nomeArquivo));
-        } catch (IOException ignored) {
+        } catch (FileNotFoundException excecao) {
+
+        } catch (IOException excecao) {
 
         }
     }
@@ -361,7 +231,7 @@ class ArquivoTextoEscrita {
 
         try {
             saida.close();
-        } catch (IOException ignored) {
+        } catch (IOException excecao) {
 
         }
     }
@@ -371,11 +241,12 @@ class ArquivoTextoEscrita {
         try {
             saida.write(textoEntrada);
             saida.newLine();
-        } catch (IOException ignored) {
+        } catch (IOException excecao) {
 
         }
     }
 }
+
 class ArquivoTextoLeitura {
 
     private BufferedReader entrada;
@@ -415,32 +286,32 @@ class ArquivoTextoLeitura {
 }
 
 
-
 class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws NumberFormatException, Exception {
 
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         ArquivoTextoLeitura leitura = new ArquivoTextoLeitura();
 
-        String id;
+        String idInformado;
 
         int qtdJogadores = qtdLinhas(leitura);
 
-        Jogador[] jogadores = preencherVetorJogador(leitura, qtdJogadores);
+        Jogador[] players = preencherVetorJogador(leitura, qtdJogadores);
 
-        ABB arvore = new ABB();
+
+        tHashEmAberto tabela = new tHashEmAberto(79);
 
         do {
-            id = in.readLine();
+            idInformado = in.readLine();
 
-            if (!(id.equals("FIM"))) {
+            if (!(idInformado.equals("FIM"))) {
 
-                arvore.inserir(jogadores[Integer.parseInt(id)]);
+                tabela.inserir(players[Integer.parseInt(idInformado)]);
 
             }
 
-        } while (!(id.equals("FIM")));
+        } while (!(idInformado.equals("FIM")));
 
         String nome;
         long inicio = System.currentTimeMillis();
@@ -449,7 +320,12 @@ class Main {
 
             if (!(nome.equals("FIM"))) {
 
-                if (arvore.buscar(nome) == null)
+                Jogador buscado = null;
+                for (int i = 0; i < players.length; i++)
+                    if (players[i].getNome().equals(nome))
+                        buscado = players[i];
+
+                if (tabela.pesquisar(buscado) == null)
                     System.out.print("NAO\n");
                 else
                     System.out.print("SIM\n");
@@ -459,18 +335,18 @@ class Main {
         } while (!(nome.equals("FIM")));
 
         long fim = System.currentTimeMillis();
-        int comparacoes = arvore.getComparacoes();
+        int comparacoes = tabela.getComparacoes();
         gerarLog(inicio, fim, comparacoes);
 
     }
 
     public static void gerarLog(long inicio, long fim, int comparacoes) {
-        long tempo = fim - inicio;
+        long mili = fim - inicio;
 
         ArquivoTextoEscrita escrita = new ArquivoTextoEscrita();
-        String log = new String("750376,689811,763343\t" + tempo + "\t" + comparacoes);
+        String log = new String("750376,689811,763343\t" + mili + "\t" + comparacoes);
 
-        escrita.abrirArquivo("matricula_arvoreBinaria.txt");
+        escrita.abrirArquivo("matricula_hashRehashing.txt");
         escrita.escrever(log);
         escrita.fecharArquivo();
     }
@@ -499,8 +375,10 @@ class Main {
             jogadores[i] = new Jogador();
 
         leitura.abrirArquivo("/tmp/jogadores.txt");
+
         leitura.ler();
         for (int i = 0; i < qtdLinhas; i++) {
+
             String[] linhasDados = leitura.ler().split(",", 8);
 
             jogadores[i].setId(Integer.parseInt((linhasDados[0].toString())));
@@ -518,4 +396,5 @@ class Main {
 
         return jogadores;
     }
+
 }

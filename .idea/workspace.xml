@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="86f31764-7ccc-4604-a50d-8ac1fa84de7a" name="Changes" comment="att">
-      <change beforePath="$PROJECT_DIR$/Prática Leitura de arquivo-texto - Jogadores da NBA/Prática Leitura de arquivo-texto - Jogadores da NBA.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JogadoresNBA-AEDS2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/JogadoresNBA-AEDS2.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Prática Árvores binárias de busca - Jogadores da NBA/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Prática Árvores binárias de busca - Jogadores da NBA/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,7 +34,8 @@
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "E:/Desenvolvimento/Estudo/Faculdade/AEDS2 - Engenharia de Software/JogadoresNBA-AEDS2/Prática Listas duplamente encadeadas - Jogadores da NBA",
+    "jdk.selected.JAVA_MODULE": "17",
+    "last_opened_file_path": "E:/Desenvolvimento/Estudo/Faculdade/AEDS2 - Engenharia de Software/JogadoresNBA-AEDS2",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -40,6 +43,21 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="JogadoresNBA-AEDS2" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="JogadoresNBA-AEDS2" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -58,6 +76,13 @@
       <workItem from="1683337511638" duration="39000" />
       <workItem from="1684369423161" duration="38000" />
       <workItem from="1684515160575" duration="164000" />
+      <workItem from="1686327740957" duration="21000" />
+      <workItem from="1686327774332" duration="10000" />
+      <workItem from="1686327794361" duration="98000" />
+      <workItem from="1686327983036" duration="7000" />
+      <workItem from="1686327999589" duration="25000" />
+      <workItem from="1687017605779" duration="8000" />
+      <workItem from="1687019655585" duration="8000" />
     </task>
     <task id="LOCAL-00001" summary="att">
       <created>1684369445412</created>
